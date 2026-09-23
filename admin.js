@@ -34,47 +34,71 @@ async function fetchProducts() {
 
 function renderAdminList() {
     const list = document.getElementById('admin-product-list');
+    const searchTerm = (document.getElementById('admin-search-input')?.value || '').toLowerCase().trim();
     list.innerHTML = '';
 
-    products.forEach(p => {
+    const filtered = products.filter(p => {
+        if (!searchTerm) return true;
+        return (p.nombre && p.nombre.toLowerCase().includes(searchTerm)) ||
+               (p.categoria && p.categoria.toLowerCase().includes(searchTerm)) ||
+               (p.tag && p.tag.toLowerCase().includes(searchTerm));
+    });
+
+    if (filtered.length === 0) {
+        list.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">No se encontraron productos.</p>';
+        return;
+    }
+
+    filtered.forEach(p => {
+        const isActivo = p.activo !== false && p.disponible !== false;
         const row = document.createElement('div');
         row.className = 'product-edit-card';
         row.innerHTML = `
-            <img src="${p.imagen}" alt="">
-            <div>
-                <h4 style="margin: 0;">${p.nombre}</h4>
-                <small style="color: #888;">${p.categoria} | ${p.tag} | $${p.precio || 0}</small>
+            <div class="product-card-top">
+                <img src="${p.imagen || 'assets/img/placeholder.svg'}" alt="${p.nombre || ''}" onerror="this.src='logo.jpeg'">
+                <div class="product-card-info">
+                    <h4>${p.nombre || 'Sin nombre'}</h4>
+                    <div class="meta">${p.categoria || ''} ${p.tag ? '• ' + p.tag : ''} • <strong>$${(p.precio || 0).toLocaleString('es-CL')}</strong></div>
+                    <span class="badge ${isActivo ? 'badge-active' : 'badge-inactive'}">
+                        ${isActivo ? '✅ Vigente' : '⛔ No Vigente'}
+                    </span>
+                </div>
             </div>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn btn-sm" onclick="editProduct(${p.id})">Editar</button>
-                <button class="btn btn-sm outline" style="border-color: #ff4d4d; color: #ff4d4d;" onclick="deleteProduct(${p.id})">Eliminar</button>
+            <div class="product-card-actions">
+                <button class="btn btn-sm" onclick="editProduct('${p.id}')">✏️ Editar</button>
+                <button class="btn btn-sm outline btn-danger" onclick="deleteProduct('${p.id}')">🗑️ Eliminar</button>
             </div>
         `;
         list.appendChild(row);
     });
 }
 
+// Búsqueda en tiempo real
+document.getElementById('admin-search-input')?.addEventListener('input', renderAdminList);
+
 function showAddModal() {
     document.getElementById('modalTitle').innerText = 'Nuevo Producto';
     document.getElementById('productForm').reset();
     document.getElementById('edit-id').value = '';
     document.getElementById('edit-precio').value = '';
+    document.getElementById('edit-activo').value = 'true';
     document.getElementById('edit-imagen-preview').style.display = 'none';
     document.getElementById('editModal').style.display = 'flex';
 }
 
 function editProduct(id) {
-    const p = products.find(prod => prod.id === id);
+    const p = products.find(prod => String(prod.id) === String(id));
     if (!p) return;
 
     document.getElementById('modalTitle').innerText = 'Editar Producto';
     document.getElementById('edit-id').value = p.id;
-    document.getElementById('edit-nombre').value = p.nombre;
+    document.getElementById('edit-activo').value = (p.activo !== false && p.disponible !== false) ? 'true' : 'false';
+    document.getElementById('edit-nombre').value = p.nombre || '';
     document.getElementById('edit-precio').value = p.precio || '';
-    document.getElementById('edit-categoria').value = p.categoria;
-    document.getElementById('edit-descripcion').value = p.descripcion;
-    document.getElementById('edit-tag').value = p.tag;
-    document.getElementById('edit-imagen').value = p.imagen;
+    document.getElementById('edit-categoria').value = p.categoria || 'panaderia';
+    document.getElementById('edit-descripcion').value = p.descripcion || '';
+    document.getElementById('edit-tag').value = p.tag || '';
+    document.getElementById('edit-imagen').value = p.imagen || '';
 
     const preview = document.getElementById('edit-imagen-preview');
     if (p.imagen) {
@@ -102,7 +126,7 @@ document.getElementById('productForm').addEventListener('submit', async function
     
     try {
         const idStr = document.getElementById('edit-id').value;
-        const id = idStr ? parseInt(idStr) : Date.now();
+        const id = idStr ? idStr : Date.now().toString();
         
         let imageUrl = document.getElementById('edit-imagen').value;
         
@@ -118,7 +142,7 @@ document.getElementById('productForm').addEventListener('submit', async function
                 console.error("Error al comprimir la imagen:", err);
             }
             
-            submitBtn.innerText = 'Subiendo foto a ImgBB...';
+            submitBtn.innerText = 'Subiendo foto...';
             const formData = new FormData();
             formData.append('image', file);
             
@@ -132,30 +156,34 @@ document.getElementById('productForm').addEventListener('submit', async function
             if (imgbbData.success) {
                 imageUrl = imgbbData.data.url;
             } else {
-                throw new Error("Error al subir la imagen a ImgBB: " + (imgbbData.error ? imgbbData.error.message : "Desconocido"));
+                throw new Error("Error al subir la imagen: " + (imgbbData.error ? imgbbData.error.message : "Desconocido"));
             }
         }
 
+        const isActivo = document.getElementById('edit-activo').value === 'true';
+
         const newProduct = {
             id: id,
-            nombre: document.getElementById('edit-nombre').value,
-            precio: parseInt(document.getElementById('edit-precio').value) || 0,
+            activo: isActivo,
+            disponible: isActivo,
+            nombre: document.getElementById('edit-nombre').value.trim(),
+            precio: parseInt(document.getElementById('edit-precio').value, 10) || 0,
             categoria: document.getElementById('edit-categoria').value,
-            descripcion: document.getElementById('edit-descripcion').value,
-            tag: document.getElementById('edit-tag').value,
+            descripcion: document.getElementById('edit-descripcion').value.trim(),
+            tag: document.getElementById('edit-tag').value.trim(),
             imagen: imageUrl
         };
 
-        submitBtn.innerText = 'Guardando en base de datos...';
+        submitBtn.innerText = 'Guardando en la nube...';
         // Guardar en Firestore usando el ID como nombre de documento
-        await setDoc(doc(db, "productos", id.toString()), newProduct);
+        await setDoc(doc(db, "productos", id.toString()), newProduct, { merge: true });
         
-        alert('Producto guardado exitosamente');
+        alert('¡Producto guardado exitosamente!');
         closeModal();
         fetchProducts(); // Recargar la lista
     } catch (error) {
         console.error("Error al guardar:", error);
-        alert('Ocurrió un error al guardar. Revisa la consola.');
+        alert('Ocurrió un error al guardar: ' + error.message);
     } finally {
         submitBtn.innerText = originalText;
         submitBtn.disabled = false;

@@ -1,4 +1,4 @@
-﻿import { db } from './firebase-config.js';
+import { db } from './firebase-config.js';
 import { collection, getDocs, query, orderBy, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         for (const [key, title] of Object.entries(categories)) {
-            const categoryProducts = products.filter(p => p.categoria === key);
+            const categoryProducts = products.filter(p => p.categoria === key && p.activo !== false && p.disponible !== false);
             
             if (categoryProducts.length > 0) {
                 const categoryBlock = document.createElement('div');
