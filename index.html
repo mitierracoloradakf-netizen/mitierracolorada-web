@@ -4,21 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Tierra Colorada | Sabores Artesanales de Parral</title>
-    <meta name="description" content="Descubre la esencia de Parral con Mi Tierra Colorada. Mermeladas artesanales y conservas ecológicas del Maule, Chile. Sabor natural y sostenible.">
+    <meta name="description" content="Descubre la esencia de Parral con Mi Tierra Colorada. Panes de masa madre, mermeladas gourmet y conservas ecológicas del Maule, Chile. Sabor 100% artesanal.">
     
-    <!-- Google Fonts optimizadas -->
+    <!-- Google Fonts optimizadas: Playfair Display & Outfit (MTC Design System) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
     
     <!-- Meta tags sociales -->
     <meta property="og:title" content="Mi Tierra Colorada | Sabores Artesanales">
-    <meta property="og:description" content="Productos artesanales desde el corazón del Maule.">
+    <meta property="og:description" content="Productos artesanales y panadería de masa madre desde el corazón del Maule.">
     <meta property="og:image" content="logo.jpeg">
 </head>
 <body>
+
+    <!-- Top Announcement: Entregas Gratis en Parral -->
+    <div class="delivery-banner">
+        <div class="container">
+            <span>🚚 <strong>Entregas GRATIS en Parral (radio urbano)</strong> • Despachos a otras ciudades se coordinan previamente por WhatsApp</span>
+        </div>
+    </div>
 
     <!-- Botón WhatsApp Flotante -->
     <a href="https://wa.me/56978521748?text=Hola%20Mi%20Tierra%20Colorada,%20me%20gustar%C3%ADa%20informaci%C3%B3n%20sobre%20sus%20productos." class="wsp-float" target="_blank" id="wsp-float" aria-label="Contactar por WhatsApp">
@@ -31,11 +38,12 @@
     <nav class="navbar">
         <div class="nav-container container">
             <a href="#home" class="logo">
-                <img src="logo.jpeg" alt="Logo Mi Tierra Colorada" width="50" height="50" loading="lazy">
+                <img src="logo.jpeg" alt="Logo Mi Tierra Colorada" width="44" height="44" loading="lazy">
                 <span>Mi Tierra Colorada</span>
             </a>
             <div class="nav-links">
                 <a href="#essence">Esencia</a>
+                <a href="#preparaciones">Preparaciones</a>
                 <a href="#products">Catálogo</a>
                 <a href="#contact">Contacto</a>
             </div>
@@ -51,11 +59,11 @@
 
     <!-- Hero Section -->
     <header id="home" class="hero">
-        <div class="hero-overlay"></div>
         <div class="hero-content">
+            <span class="hero-pill">🌾 100% Agroecológico & Artesanal • Parral, Maule</span>
             <h1>Sabores de nuestra tierra,<br>directo a tu mesa.</h1>
-            <p>Mermeladas, conservas y panadería de masa madre. 100% artesanal, 100% natural.</p>
-            <a href="#products" class="btn btn-primary">Ver Catálogo</a>
+            <p>Mermeladas gourmet, conservas del campo y panadería de masa madre real. Sin químicos, sin prisas.</p>
+            <a href="#products" class="btn btn-primary">Ver Catálogo de Productos</a>
         </div>
     </header>
 
@@ -64,38 +72,150 @@
         <section id="essence" class="section">
             <div class="container">
                 <h2 class="section-title">Nuestra Esencia</h2>
+                <p class="section-subtitle">Cultivamos y elaboramos con respeto profundo por el ciclo natural de la tierra.</p>
                 <div class="essence-grid">
                     <div class="essence-img-wrapper">
-                        <img src="grupo1.jpg" alt="Producción artesanal" width="600" height="400" loading="lazy" class="essence-img">
+                        <img src="grupo1.jpg" alt="Producción artesanal Mi Tierra Colorada" width="600" height="400" loading="lazy" decoding="async" class="essence-img">
                     </div>
                     <div class="essence-text">
-                        <h3>Tradición y Sostenibilidad</h3>
-                        <p>Estamos ubicados en la precordillera de Parral, Maule, donde nos dedicamos a rescatar los sabores naturales a través de procesos artesanales. En "Mi Tierra Colorada" creemos en la soberanía alimentaria y en el respeto por el ciclo de la tierra.</p>
-                        <p>Cada frasco es una historia de esfuerzo local, ingredientes frescos y amor por lo natural.</p>
+                        <h3>Tradición, Sostenibilidad y Cariño</h3>
+                        <p>Ubicados en la precordillera de Parral, Región del Maule, rescatamos el patrimonio gastronómico local a través de procesos 100% artesanales y libres de preservantes industriales.</p>
+                        <p>Creemos en la soberanía alimentaria y en llevar a tu hogar alimentos reales que nutren cuerpo y alma.</p>
+                        
+                        <div class="essence-features">
+                            <div class="essence-feat-item">
+                                <span class="essence-feat-icon">🌾</span>
+                                <span>Masa Madre Viva</span>
+                            </div>
+                            <div class="essence-feat-item">
+                                <span class="essence-feat-icon">🍓</span>
+                                <span>Fruta Seleccionada</span>
+                            </div>
+                            <div class="essence-feat-item">
+                                <span class="essence-feat-icon">🫒</span>
+                                <span>Aceite de Oliva Extra</span>
+                            </div>
+                            <div class="essence-feat-item">
+                                <span class="essence-feat-icon">🚚</span>
+                                <span>Envío Gratis en Parral</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nueva Sección: Nuestras Preparaciones -->
+        <section id="preparaciones" class="section bg-light">
+            <div class="container">
+                <h2 class="section-title">Nuestras Preparaciones</h2>
+                <p class="section-subtitle">El secreto detrás de cada sabor: tiempo, paciencia y los mejores ingredientes naturales.</p>
+                
+                <div class="preparaciones-grid">
+                    <!-- Tarjeta 1: Masa Madre -->
+                    <div class="prep-card">
+                        <div class="prep-img-wrapper">
+                            <img src="pan_real.jpg" alt="Panadería de Masa Madre" class="prep-img" loading="lazy" decoding="async">
+                            <span class="prep-badge">🌾 24 a 48 hrs de fermentación</span>
+                        </div>
+                        <div class="prep-body">
+                            <div class="prep-icon">🥖</div>
+                            <h3>Masa Madre Real</h3>
+                            <p class="prep-desc">Elaborado exclusivamente con harina seleccionada, agua, sal de mar y cultivo vivo de masa madre. Sin levaduras químicas ni aditivos.</p>
+                            <ul class="prep-steps">
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Fermentación lenta y en frío
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Fácil digestión y bajo índice glicémico
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Corteza crocante y miga aireada
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 2: Mermeladas Gourmet -->
+                    <div class="prep-card">
+                        <div class="prep-img-wrapper">
+                            <img src="Mermelada de berries 2.jpg" alt="Mermeladas Gourmet" class="prep-img" loading="lazy" decoding="async">
+                            <span class="prep-badge">🍓 100% Fruta Precordillerana</span>
+                        </div>
+                        <div class="prep-body">
+                            <div class="prep-icon">🍯</div>
+                            <h3>Mermeladas Gourmet</h3>
+                            <p class="prep-desc">Frutas recolectadas en su punto óptimo de madurez en la precordillera de Parral, cocinadas lentamente en pailas tradicionales.</p>
+                            <ul class="prep-steps">
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Alto porcentaje de fruta natural
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Bajo aporte de azúcar añadido
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Perfectas para maridar quesos y carnes
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 3: Salsas y Conservas -->
+                    <div class="prep-card">
+                        <div class="prep-img-wrapper">
+                            <img src="Berenjena Agridulce 2.jpg" alt="Salsas y Conservas Artesanales" class="prep-img" loading="lazy" decoding="async">
+                            <span class="prep-badge">🫒 Aceite de Oliva Extra Virgen</span>
+                        </div>
+                        <div class="prep-body">
+                            <div class="prep-icon">🧄</div>
+                            <h3>Salsas y Conservas</h3>
+                            <p class="prep-desc">Recetas familiares donde asamos ajíes, berenjenas y ajos chilenos combinados con aceite de oliva extra virgen y especias.</p>
+                            <ul class="prep-steps">
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Hortalizas asadas artesanalmente
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Pasteurización y sellado al vacío natural
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Sin colorantes ni saborizantes
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Catálogo de Productos -->
-        <section id="products" class="section bg-light">
+        <section id="products" class="section bg-white-pure">
             <div class="container">
                 <h2 class="section-title">Nuestros Sabores Reales</h2>
+                <p class="section-subtitle">Elige tus favoritos y recíbelos en la puerta de tu casa.</p>
                 
-                <!-- Contenedor dinámico del catálogo -->
+                <!-- Contenedor dinámico del catálogo cargado desde Firebase -->
                 <div id="catalog-container">
-                    <div class="loader">Cargando productos...</div>
+                    <div class="loader" style="text-align: center; padding: 2rem; color: #888;">Cargando productos frescos...</div>
                 </div>
             </div>
         </section>
 
         <!-- Contacto -->
-        <section id="contact" class="section">
+        <section id="contact" class="section bg-light">
             <div class="container">
                 <div class="contact-grid">
                     <div class="contact-info">
-                        <h2 class="section-title" style="text-align: left; margin-bottom: 1.5rem;">Contáctanos</h2>
-                        <p>Haz tu pedido o cotización directamente por WhatsApp. Coordinamos entregas locales en Parral e interurbanas.</p>
+                        <h2 class="section-title" style="text-align: left; margin-bottom: 1.2rem;">Contáctanos</h2>
+                        <p>Haz tu pedido o cotización directamente por WhatsApp. Coordinamos entregas locales en Parral y despachos interurbanos.</p>
                         <ul class="contact-list">
                             <li>
                                 <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
@@ -122,7 +242,8 @@
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2024 Mi Tierra Colorada. Todos los derechos reservados. Parral, Chile.</p>
+            <p>&copy; 2026 Mi Tierra Colorada. Todos los derechos reservados. Parral, Chile.</p>
+            <p style="opacity: 0.7; font-size: 0.8rem;">Panadería de Masa Madre • Mermeladas Gourmet • Conservas Agroecológicas</p>
         </div>
     </footer>
 
@@ -142,33 +263,49 @@
             <div class="cart-summary">
                 <div class="summary-row total-row">
                     <span>Total:</span>
-                    <span id="cart-total-price"></span>
+                    <span id="cart-total-price">$0</span>
                 </div>
             </div>
             
             <form id="cart-form" class="cart-form">
                 <h4>Datos de Entrega</h4>
-                <p style="font-size: 0.85rem; color: #8B4513; margin-bottom: 1rem; background-color: #FFF8DC; padding: 10px; border-radius: 5px; border-left: 4px solid #8B4513; line-height: 1.4;">
-                    <strong>Nota Importante:</strong> Para pedidos con despacho fuera de Parral, solo se envían productos en frasco y el costo del envío es por pagar a cargo del cliente.
-                </p>
+                
+                <!-- Caja de información clara de despacho -->
+                <div class="delivery-info-box">
+                    <div class="delivery-badge-item">
+                        <span class="delivery-icon">🏡</span>
+                        <div>
+                            <strong>Parral (Radio Urbano):</strong>
+                            <div>Entrega a domicilio <strong>100% GRATIS</strong>.</div>
+                        </div>
+                    </div>
+                    <div class="delivery-badge-item">
+                        <span class="delivery-icon">📦</span>
+                        <div>
+                            <strong>Otras Ciudades / Comunas:</strong>
+                            <div>Solo productos en frasco. Envío por pagar a coordinar por WhatsApp.</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group" style="display: flex; gap: 10px;">
                     <input type="text" id="cart-name" class="form-control" placeholder="Nombre" required style="flex: 1;">
                     <input type="text" id="cart-lastname" class="form-control" placeholder="Apellido" required style="flex: 1;">
                 </div>
                 <div class="form-group">
-                    <input type="text" id="cart-address" class="form-control" placeholder="Dirección de Entrega (Ej: Las Encinas 123)" required>
+                    <input type="text" id="cart-address" class="form-control" placeholder="Dirección y Ciudad (Ej: Calle Los Olivos 123, Parral)" required>
                 </div>
                 <div class="form-group">
                     <input type="tel" id="cart-phone" class="form-control" value="+56 " placeholder="Teléfono (Ej: +56 9 1234 5678)" required>
                 </div>
                 <div class="form-group">
-                    <label for="cart-date" style="font-size: 0.85rem; color: #666; margin-bottom: 0.3rem; display: block;">Fecha de despacho solicitada</label>
+                    <label for="cart-date" style="font-size: 0.85rem; color: #555; margin-bottom: 0.3rem; display: block; font-weight: 600;">Fecha de despacho solicitada</label>
                     <input type="date" id="cart-date" class="form-control" required>
                 </div>
                 
                 <div class="cart-actions">
-                    <button type="button" id="btn-checkout-wsp" class="btn btn-primary" style="background-color: #25D366; border-color: #25D366; width: 100%; margin-bottom: 0.5rem;">
-                        Enviar Pedido por WhatsApp
+                    <button type="button" id="btn-checkout-wsp" class="btn btn-primary" style="background-color: #25D366; border-color: #25D366; width: 100%; margin-bottom: 0.5rem; font-size: 1rem;">
+                        Enviar Pedido por WhatsApp 💬
                     </button>
                 </div>
             </form>
@@ -176,7 +313,6 @@
     </div>
 
     <!-- Script principal -->
-    <script type="module" src="script_v6.js?v=10"></script>
+    <script type="module" src="script_v6.js?v=11"></script>
 </body>
 </html>
-

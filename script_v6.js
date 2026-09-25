@@ -248,7 +248,8 @@ document.addEventListener('DOMContentLoaded', () => {
         text += `*Nombre:* ${inputName.value.trim()} ${inputLastname.value.trim()}\n`;
         text += `*Teléfono:* ${inputPhone.value.trim()}\n`;
         text += `*Dirección/Ciudad:* ${inputAddress.value.trim()}\n`;
-        text += `*Fecha deseada:* ${dateFormatted}`;
+        text += `*Fecha solicitada:* ${dateFormatted}\n\n`;
+        text += `_🚚 Nota: Entregas gratis en Parral urbano. Despacho a otras ciudades se coordina previamente._`;
         
         return text;
     };
