@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     card.className = 'product-card';
                     card.innerHTML = `
                         <span class="product-tag">${product.tag || ''}</span>
-                        <img src="${product.imagen}" alt="${product.nombre}" class="product-img" loading="lazy" width="400" height="300">
+                        <img src="${product.imagen}" alt="${product.nombre}" class="product-img" loading="lazy" decoding="async" width="400" height="300" onerror="this.src='logo.jpeg'">
                         <div class="product-info">
                             <h4>${product.nombre}</h4>
                             <p class="product-desc">${product.descripcion || ''}</p>
