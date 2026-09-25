@@ -67,7 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const categories = {
             panaderia: '🥖 Panadería Artesanal',
             mermeladas: '🍓 Mermeladas Gourmet',
-            conservas: '🧄 Salsas y Conservas'
+            conservas: '🧄 Salsas y Conservas',
+            alimentos: '🍲 Alimentos (Almuerzos, Cóctel y Otros)',
+            bebidas: '🍹 Bebidas',
+            aceites: '🫒 Aceites'
         };
 
         for (const [key, title] of Object.entries(categories)) {
