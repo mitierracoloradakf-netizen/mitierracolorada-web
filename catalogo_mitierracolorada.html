@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo Oficial - Mi Tierra Colorada</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+        
+        @page {
+            size: A4 portrait;
+            margin: 10mm 12mm 10mm 12mm;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: #2b231d;
+            background-color: #ffffff;
+            line-height: 1.35;
+            font-size: 12px;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 2.5px solid #C04A26;
+            margin-bottom: 12px;
+        }
+        
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .header-logo {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #C04A26;
+        }
+        
+        .header-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            color: #C04A26;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .header-title p {
+            font-size: 11px;
+            color: #5D7043;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .header-contact {
+            text-align: right;
+            font-size: 10.5px;
+            color: #4a4039;
+            line-height: 1.3;
+        }
+        
+        .header-contact strong {
+            color: #C04A26;
+        }
+        
+        .banner {
+            background-color: #F8F4EE;
+            border-left: 4px solid #5D7043;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .category-section {
+            margin-bottom: 14px;
+            page-break-inside: avoid;
+        }
+        
+        .category-header {
+            margin-bottom: 8px;
+            padding-bottom: 3px;
+            border-bottom: 1.5px solid #e8dfd5;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+        
+        .category-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            color: #C04A26;
+            margin: 0;
+        }
+        
+        .category-header span {
+            font-size: 10px;
+            color: #7d7065;
+            font-style: italic;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .product-card {
+            background: #faf7f2;
+            border: 1px solid #e6ddd2;
+            border-radius: 6px;
+            padding: 8px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            page-break-inside: avoid;
+        }
+        
+        .product-img {
+            width: 65px;
+            height: 65px;
+            border-radius: 6px;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 1px solid #d9cebe;
+        }
+        
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 65px;
+        }
+        
+        .product-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2px;
+        }
+        
+        .product-name {
+            font-weight: 700;
+            font-size: 12px;
+            color: #2b231d;
+            line-height: 1.15;
+        }
+        
+        .product-tag {
+            font-size: 8.5px;
+            background: #E89A1E;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            margin-left: 4px;
+        }
+        
+        .product-desc {
+            font-size: 10px;
+            color: #554a40;
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+        
+        .product-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .product-price {
+            font-size: 13px;
+            font-weight: 800;
+            color: #C04A26;
+        }
+        
+        .status-badge {
+            font-size: 9px;
+            font-weight: 600;
+            padding: 1px 5px;
+            border-radius: 4px;
+        }
+        
+        .status-active {
+            color: #3b5c22;
+            background: #e4eedb;
+        }
+        
+        .status-inactive {
+            color: #9e2a2b;
+            background: #fce8e8;
+        }
+        
+        .footer-note {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed #C04A26;
+            text-align: center;
+            font-size: 10.5px;
+            color: #665b52;
+            page-break-inside: avoid;
+        }
+        
+        .footer-highlight {
+            font-weight: 700;
+            color: #C04A26;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado -->
+    <div class="header">
+        <div class="header-brand">
+            <img src="logo.jpeg" class="header-logo" alt="Logo">
+            <div class="header-title">
+                <h1>Mi Tierra Colorada</h1>
+                <p>Sabores Artesanales de Parral • Agroecológico</p>
+            </div>
+        </div>
+        <div class="header-contact">
+            <p><strong>WhatsApp:</strong> +56 9 7852 1748</p>
+            <p><strong>Sitio Web:</strong> mitierracolorada.cl</p>
+            <p><strong>Instagram:</strong> @mitierracoloradaparral</p>
+            <p>Precordillera de Parral, Región del Maule</p>
+        </div>
+    </div>
+
+    <!-- Banner Despachos -->
+    <div class="banner">
+        <span>🚚 <strong>Entregas GRATIS en Parral (radio urbano)</strong></span>
+        <span>📦 <em>Despachos interurbanos a convenir previamente por WhatsApp</em></span>
+    </div>
+
+    <!-- CATEGORÍA 1: PANADERÍA -->
+    <div class="category-section">
+        <div class="category-header">
+            <h2>🥖 Panadería de Masa Madre</h2>
+            <span>Fermentación lenta de 12 a 15 horas • Harina seleccionada, agua y sal de mar</span>
+        </div>
+        <div class="products-grid">
+            
+            <!-- Dúo -->
+            <div class="product-card">
+                <img src="pan_real.jpg" class="product-img" alt="Dúo">
+                <div class="product-info">
+                    <div>
+                        <div class="product-top">
+                            <span class="product-name">Dúo</span>
+                            <span class="product-tag">Masa Madre</span>
+                        </div>
+                        <p class="product-desc">80% de harina blanca y 20% de harina integral. 900 Gr. Aprox.</p>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$2.500 CLP</span>
+                        <span class="status-badge status-active">✅ Vigente</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dúo Semilla -->
+            <div class="product-card">
+                <img src="DSC_0263.jpg" class="product-img" alt="Dúo Semilla">
+                <div class="product-info">
+                    <div>
+                        <div class="product-top">
+                            <span class="product-name">Dúo Semilla</span>
+                            <span class="product-tag">Masa Madre</span>
+                        </div>
+                        <p class="product-desc">80% harina blanca, 20% harina integral + 80 gr. de semillas (Chía, Linaza, Maravilla y Calabaza). 900 Gr. Aprox.</p>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$3.000 CLP</span>
+                        <span class="status-badge status-active">✅ Vigente</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integral -->
+            <div class="product-card">
+                <img src="DSC_0284.jpg" class="product-img" alt="Integral">
+                <div class="product-info">
+                    <div>
+                        <div class="product-top">
+                            <span class="product-name">Integral</span>
+                            <span class="product-tag">Masa Madre</span>
+                        </div>
+                        <p class="product-desc">100% harina integral. 900 Gr. Aprox.</p>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$4.000 CLP</span>
+                        <span class="status-badge status-active">✅ Vigente</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integral Semilla -->
+            <div class="product-card">
+                <img src="DSC_0287.jpg" class="product-img" alt="Integral Semilla">
+                <div class="product-info">
+                    <div>
+                        <div class="product-top">
+                            <span class="product-name">Integral Semilla</span>
+                            <span class="product-tag">Masa Madre</span>
+                        </div>
+                        <p class="product-desc">100% harina integral + 80 gr. de semillas (Chía, Linaza, Maravilla y Calabaza). 900 Gr. Aprox.</p>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$4.500 CLP</span>
+                        <span class="status-badge status-active">✅ Vigente</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CATEGORÍA 2: MERMELADAS -->
+    <div class="category-section">
+        <div class="category-header">
+            <h2>🍓 Mermeladas Gourmet</h2>
+            <span>100% fruta natural precordillerana • Cocción lenta tradicional</span>
+        </div>
+        <div class="products-grid">
+            
+            <!-- Tomate & Albahaca -->
+            <div class="product-card">
+                <img src="Tomate_albaca_2.jpg" class="product-img" alt="Mermelada Tomate & Albahaca">
+                <div class="product-info">
+                    <div>
+                        <div class="product-top">
+                            <span class="product-name">Tomate & Albahaca</span>
+                            <span class="product-tag">Firma</span>
+                        </div>
+                        <p class="product-desc">Balance perfecto entre dulzor de tomate y aroma de albahaca fresca del huerto. 250 Gr. Aprox.</p>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$5.000 CLP</span>
+                        <span class="status-badge status-active">✅ Vigente</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pimentón -->
+            <div class="product-card">
+                <img src="pimenton.jpg" class="product-img" alt="Mermelada de Pimentón">
+                <div class="product-info">
+                    <div>
+                        <div class="product-top">
+                            <span class="product-name">Mermelada de Pimentón</span>
+                            <span class="product-tag">Especial</span>
+                        </div>
+                        <p class="product-desc">Elegante y versátil, ideal para maridar con quesos, carnes blancas y picoteos. 250 Gr. Aprox.</p>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$5.000 CLP</span>
+                        <span class="status-badge status-active">✅ Vigente</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alcayota -->
+            <div class="product-card">
+                <img src="Mermelada de alcayota.jpg" class="product-img" alt="Mermelada de Alcayota">
+                <div class="product-info">
+                    <div>
+                        <div class="product-top">
+                            <span class="product-name">Mermelada de Alcayota</span>
+                            <span class="product-tag">Campo</span>
+                        </div>
+                        <p class="product-desc">Textura suave y en hebras con suave toque acaramelado. Clásico de repostería. 500 Gr. Aprox.</p>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$5.000 CLP</span>
+                        <span class="status-badge status-active">✅ Vigente</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mora -->
+            <div class="product-card">
+                <img src="Mermelada Mora 2.jpg" class="product-img" alt="Mermelada de Mora">
+                <div class="product-info">
+                    <div>
+                        <div class="product-top">
+                            <span class="product-name">Mermelada de Mora</span>
+                            <span class="product-tag">Bosque</span>
+                        </div>
+                        <p class="product-desc">Sabor intenso y frutal, fruta recolectada en su punto justo de madurez. 500 Gr. Aprox.</p>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$5.000 CLP</span>
+                        <span class="status-badge status-inactive">⛔ No Vigente</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Berries -->
+            <div class="product-card">
+                <img src="Mermelada de berries 2.jpg" class="product-img" alt="Mermelada de Berries">
+                <div class="product-info">
+                    <div>
+                        <div class="product-top">
+                            <span class="product-name">Mermelada de Berries</span>
+                            <span class="product-tag">Mix</span>
+                        </div>
+                        <p class="product-desc">Explosión de frutos rojos: frambuesas, arándanos y frutillas de la zona. 500 Gr. Aprox.</p>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$5.000 CLP</span>
+                        <span class="status-badge status-inactive">⛔ No Vigente</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CATEGORÍA 3: CONSERVAS -->
+    <div class="category-section">
+        <div class="category-header">
+            <h2>🧄 Salsas y Conservas Artesanales</h2>
+            <span>Hortalizas asadas y cocción lenta en Aceite de Oliva Extra Virgen</span>
+        </div>
+        <div class="products-grid">
+            
+            <!-- Berenjenas Agridulces -->
+            <div class="product-card">
+                <img src="Berenjena Agridulce 2.jpg" class="product-img" alt="Berenjenas Agridulces">
+                <div class="product-info">
+                    <div>
+                        <div class="product-top">
+                            <span class="product-name">Berenjenas Agridulces</span>
+                            <span class="product-tag">Gourmet</span>
+                        </div>
+                        <p class="product-desc">Receta secreta agridulce que resalta la textura única de la berenjena asada. 500 Gr. Aprox.</p>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$5.000 CLP</span>
+                        <span class="status-badge status-active">✅ Vigente</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ajos Asados -->
+            <div class="product-card">
+                <img src="ajos.jpg" class="product-img" alt="Ajos Asados en Aceite de Oliva">
+                <div class="product-info">
+                    <div>
+                        <div class="product-top">
+                            <span class="product-name">Ajos Asados en Oliva</span>
+                            <span class="product-tag">Novedad</span>
+                        </div>
+                        <p class="product-desc">Suaves, cremosos y listos para untar. Delicia para amantes del ajo premium. 250 Gr. Aprox.</p>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$5.000 CLP</span>
+                        <span class="status-badge status-active">✅ Vigente</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ají Cacho de Cabra -->
+            <div class="product-card">
+                <img src="cacho_cabra.jpg" class="product-img" alt="Salsa Ají Cacho de Cabra">
+                <div class="product-info">
+                    <div>
+                        <div class="product-top">
+                            <span class="product-name">Ají Cacho de Cabra</span>
+                            <span class="product-tag">Chileno</span>
+                        </div>
+                        <p class="product-desc">Sabor intenso con el picor tradicional y rústico del campo chileno. 250 Gr. Aprox.</p>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$5.000 CLP</span>
+                        <span class="status-badge status-active">✅ Vigente</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ají Cristal -->
+            <div class="product-card">
+                <img src="salsa de aji cristal 2.jpg" class="product-img" alt="Salsa de Ají Cristal">
+                <div class="product-info">
+                    <div>
+                        <div class="product-top">
+                            <span class="product-name">Salsa de Ají Cristal</span>
+                            <span class="product-tag">Aromática</span>
+                        </div>
+                        <p class="product-desc">Picor vibrante, fresco y con una fragancia inconfundible para comidas diarias. 250 Gr. Aprox.</p>
+                    </div>
+                    <div class="product-bottom">
+                        <span class="product-price">$5.000 CLP</span>
+                        <span class="status-badge status-active">✅ Vigente</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <div class="footer-note">
+        <p><span class="footer-highlight">🌾 Pedidos y Consultas directas al WhatsApp: +56 9 7852 1748</span> • Catálogo online: <strong>https://mitierracolorada.cl</strong></p>
+        <p style="margin-top: 2px; font-size: 9.5px; color: #887d74;">Elaboración artesanal bajo recetas familiares, sin aditivos artificiales ni preservantes químicos • Parral, Chile.</p>
+    </div>
+
+</body>
+</html>
