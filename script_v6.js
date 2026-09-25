@@ -33,16 +33,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicialización
     const init = async () => {
         try {
-            const q = query(collection(db, "productos"), orderBy("id", "asc"));
-            const querySnapshot = await getDocs(q);
+            const querySnapshot = await getDocs(collection(db, "productos"));
             products = [];
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                const prodId = data.id !== undefined && data.id !== null ? String(data.id) : String(doc.id);
+            querySnapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                const prodId = data.id !== undefined && data.id !== null ? String(data.id) : String(docSnap.id);
                 products.push({
                     ...data,
                     id: prodId
                 });
+            });
+
+            // Ordenar por ID o por nombre
+            products.sort((a, b) => {
+                const numA = parseInt(String(a.id).replace(/\D/g, ''), 10);
+                const numB = parseInt(String(b.id).replace(/\D/g, ''), 10);
+                if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+                return (a.nombre || '').localeCompare(b.nombre || '');
             });
             
             renderCatalog();
@@ -64,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         for (const [key, title] of Object.entries(categories)) {
-            const categoryProducts = products.filter(p => p.categoria === key && p.activo !== false && p.disponible !== false);
+            const categoryProducts = products.filter(p => p.categoria === key && p.activo !== false && p.disponible !== false && p.publicadoWeb !== false);
             
             if (categoryProducts.length > 0) {
                 const categoryBlock = document.createElement('div');
