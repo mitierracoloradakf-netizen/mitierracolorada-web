@@ -99,6 +99,24 @@
         "imagen": "grupo2.jpg"
     },
     {
+        "id": "prod-16",
+        "categoria": "mermeladas",
+        "nombre": "Mermelada de Frambuesa",
+        "tag": "Tradicional",
+        "descripcion": "Frambuesas frescas seleccionadas del Maule. Dulzor equilibrado con notas cítricas naturales.",
+        "precio": 5000,
+        "imagen": "berries.jpg"
+    },
+    {
+        "id": "prod-17",
+        "categoria": "mermeladas",
+        "nombre": "Mermelada de Membrillo",
+        "tag": "Tradición",
+        "descripcion": "Sabor nostálgico del campo chileno, cocinado lentamente con membrillos aromáticos de huerto.",
+        "precio": 5000,
+        "imagen": "grupo1.jpg"
+    },
+    {
         "id": "prod-9",
         "categoria": "conservas",
         "nombre": "Berenjenas Agridulces",
