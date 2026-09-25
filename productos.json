@@ -90,6 +90,15 @@
         "imagen": "aji_cristal.jpg"
     },
     {
+        "id": "prod-15",
+        "categoria": "mermeladas",
+        "nombre": "Mermelada de Cebolla",
+        "tag": "Caramelizada",
+        "descripcion": "Cebollas cocinadas lentamente con un toque agridulce. Ideal para carnes, hamburguesas y quesos maduros.",
+        "precio": 5000,
+        "imagen": "grupo2.jpg"
+    },
+    {
         "id": "prod-9",
         "categoria": "conservas",
         "nombre": "Berenjenas Agridulces",
