@@ -41,7 +41,7 @@
         "nombre": "Tomate & Albahaca",
         "tag": "Firma",
         "descripcion": "Equilibrio perfecto de tomates maduros con albahaca fresca de huerto.",
-        "precio": 3800,
+        "precio": 5000,
         "imagen": "Tomate_albaca_2.jpg"
     },
     {
@@ -50,7 +50,7 @@
         "nombre": "Mermelada de Pimentón",
         "tag": "Especial",
         "descripcion": "Mermelada agridulce gourmet, ideal para maridar con quesos y carnes.",
-        "precio": 3800,
+        "precio": 5000,
         "imagen": "pimenton.jpg"
     },
     {
@@ -59,7 +59,7 @@
         "nombre": "Mermelada de Mora",
         "tag": "Bosque",
         "descripcion": "Sabor intenso y frutal de moras silvestres de la precordillera.",
-        "precio": 3800,
+        "precio": 5000,
         "imagen": "Mermelada Mora 2.jpg"
     },
     {
@@ -68,8 +68,17 @@
         "nombre": "Mermelada de Berries",
         "tag": "Mix",
         "descripcion": "Explosión de frutos rojos: frambuesas, arándanos y frutillas del Maule.",
-        "precio": 3800,
+        "precio": 5000,
         "imagen": "Mermelada de berries 2.jpg"
+    },
+    {
+        "id": "prod-179037083554715",
+        "categoria": "mermeladas",
+        "nombre": "Mermelada de Alcayota",
+        "tag": "Campo",
+        "descripcion": "Receta tradicional chilena con hebras de alcayota suave y aromática.",
+        "precio": 5000,
+        "imagen": "Mermelada de alcayota.jpg"
     },
     {
         "id": "prod-9",
@@ -77,7 +86,7 @@
         "nombre": "Berenjenas Agridulces",
         "tag": "Gourmet",
         "descripcion": "Berenjenas asadas artesanalmente en aceite de oliva con receta agridulce.",
-        "precio": 4200,
+        "precio": 5000,
         "imagen": "Berenjena Agridulce 2.jpg"
     },
     {
@@ -86,7 +95,7 @@
         "nombre": "Ajos Asados en Aceite de Oliva",
         "tag": "Novedad",
         "descripcion": "Ajos suaves y cremosos listos para untar, en aceite de oliva extra virgen.",
-        "precio": 4500,
+        "precio": 5000,
         "imagen": "ajos.jpg"
     },
     {
@@ -95,7 +104,7 @@
         "nombre": "Salsa Ají Cacho de Cabra",
         "tag": "Chileno",
         "descripcion": "Sabor ahumado e intenso con el picor rústico tradicional del campo chileno.",
-        "precio": 3500,
+        "precio": 5000,
         "imagen": "salsa de aji cacho de cabra 2.jpg"
     },
     {
@@ -104,7 +113,16 @@
         "nombre": "Salsa de Ají Cristal",
         "tag": "Aromática",
         "descripcion": "Picor fresco, vibrante y aromático para sazonar tus comidas diarias.",
-        "precio": 3500,
+        "precio": 5000,
         "imagen": "salsa de aji cristal 2.jpg"
+    },
+    {
+        "id": "prod-13",
+        "categoria": "conservas",
+        "nombre": "Mantequilla de Maní",
+        "tag": "100% Natural",
+        "descripcion": "100% maní tostado seleccionado, cremosa y natural. Sin azúcares añadidos ni preservantes.",
+        "precio": 5000,
+        "imagen": "grupo1.jpg"
     }
 ]
