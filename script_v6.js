@@ -34,15 +34,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const init = async () => {
         try {
             const querySnapshot = await getDocs(collection(db, "productos"));
-            products = [];
+            const uniqueMap = new Map();
+
             querySnapshot.forEach((docSnap) => {
                 const data = docSnap.data();
                 const prodId = data.id !== undefined && data.id !== null ? String(data.id) : String(docSnap.id);
-                products.push({
+                const normName = (data.nombre || '').toLowerCase().trim();
+                
+                let imgSrc = data.imagen || 'logo.jpeg';
+                if (!imgSrc.startsWith('http') && !imgSrc.startsWith('data:')) {
+                    imgSrc = 'https://mitierracolorada.cl/' + imgSrc.replace(/^\/+/, '');
+                }
+
+                const prodObj = {
                     ...data,
-                    id: prodId
-                });
+                    id: prodId,
+                    imagen: imgSrc
+                };
+
+                // Desduplicar: Si ya existe, priorizar el que tiene ID 'prod-' oficial
+                if (!uniqueMap.has(normName) || prodId.startsWith('prod-')) {
+                    uniqueMap.set(normName, prodObj);
+                }
             });
+
+            products = Array.from(uniqueMap.values());
 
             // Ordenar por ID o por nombre
             products.sort((a, b) => {
