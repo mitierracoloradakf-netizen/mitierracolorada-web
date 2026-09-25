@@ -1,5 +1,5 @@
 import { db } from './firebase-config.js';
-import { collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { collection, getDocs, getDocsFromServer, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     // Referencias DOM
@@ -84,9 +84,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateCartUI();
 
-        // 2. Consulta en segundo plano a Firestore para refrescar catálogo real en vivo
+        // 2. Consulta directa a Firestore en el servidor para refrescar catálogo real en vivo
         try {
-            const querySnapshot = await getDocs(collection(db, "productos"));
+            let querySnapshot;
+            try {
+                querySnapshot = await getDocsFromServer(collection(db, "productos"));
+            } catch (serverErr) {
+                querySnapshot = await getDocs(collection(db, "productos"));
+            }
             if (!querySnapshot.empty) {
                 const uniqueMap = new Map();
 
