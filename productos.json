@@ -81,6 +81,15 @@
         "imagen": "Mermelada de alcayota.jpg"
     },
     {
+        "id": "prod-14",
+        "categoria": "mermeladas",
+        "nombre": "Mermelada de Ají",
+        "tag": "Picante Suave",
+        "descripcion": "El toque agridulce y picante justo. Perfecta para acompañar tablas de quesos, carnes y aperitivos.",
+        "precio": 5000,
+        "imagen": "aji_cristal.jpg"
+    },
+    {
         "id": "prod-9",
         "categoria": "conservas",
         "nombre": "Berenjenas Agridulces",
