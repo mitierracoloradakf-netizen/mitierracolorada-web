@@ -33,10 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Helper para normalizar URL de imagen
     const normalizeImage = (img) => {
         if (!img) return 'logo.jpeg';
-        if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:')) {
-            return img;
+        let clean = String(img).trim();
+        if (!clean.startsWith('http://') && !clean.startsWith('https://') && !clean.startsWith('data:')) {
+            clean = clean.replace(/^\/+/, '');
         }
-        return img.replace(/^\/+/, '');
+        try {
+            return encodeURI(decodeURI(clean));
+        } catch (e) {
+            return clean;
+        }
     };
 
     // Ordenar productos
@@ -49,16 +54,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    const CACHE_KEY = 'mtc_web_products_v4';
+
     // Inicialización Instantánea (Stale-While-Revalidate)
     const init = async () => {
-        // 1. Carga ultra-rápida desde caché local o productos.json estático para FCP inmediato (0ms)
+        // Limpiar versiones viejas de caché
         try {
-            const cached = localStorage.getItem('mtc_web_products_cache');
+            localStorage.removeItem('mtc_web_products_cache');
+            localStorage.removeItem('mtc_products');
+        } catch(e){}
+
+        // 1. Carga ultra-rápida desde caché v4 o productos.json estático para FCP inmediato (0ms)
+        try {
+            const cached = localStorage.getItem(CACHE_KEY);
             if (cached) {
                 products = sortProducts(JSON.parse(cached));
                 renderCatalog();
             } else {
-                const localRes = await fetch('./productos.json');
+                const localRes = await fetch('./productos.json?v=16');
                 if (localRes.ok) {
                     const localData = await localRes.json();
                     products = sortProducts(localData.map(p => ({ ...p, imagen: normalizeImage(p.imagen) })));
@@ -71,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateCartUI();
 
-        // 2. Consulta en segundo plano a Firestore para refrescar precios, disponibilidad e imágenes
+        // 2. Consulta en segundo plano a Firestore para refrescar catálogo real en vivo
         try {
             const querySnapshot = await getDocs(collection(db, "productos"));
             if (!querySnapshot.empty) {
@@ -88,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         imagen: normalizeImage(data.imagen)
                     };
 
-                    // Desduplicar: Si ya existe, priorizar el que tiene ID 'prod-' oficial
+                    // Desduplicar por nombre
                     if (!uniqueMap.has(normName) || prodId.startsWith('prod-')) {
                         uniqueMap.set(normName, prodObj);
                     }
@@ -99,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Actualizar y guardar en caché si hay datos válidos
                 if (firestoreProducts.length > 0) {
                     products = firestoreProducts;
-                    localStorage.setItem('mtc_web_products_cache', JSON.stringify(products));
+                    localStorage.setItem(CACHE_KEY, JSON.stringify(products));
                     renderCatalog();
                 }
             }
