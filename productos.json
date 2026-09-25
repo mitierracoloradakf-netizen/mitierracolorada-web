@@ -1,92 +1,110 @@
-﻿[
+[
     {
-        "id": 1,
+        "id": "prod-1",
         "categoria": "panaderia",
-        "nombre": "Variedades de Masa Madre",
-        "descripcion": "🍞 Dúo: 80% blanca / 20% integral, 🥖 Dúo Semilla: Con mix de semillas, 🌾 Integral: 100% harina integral, 🥨 Integral Semilla: 100% integral con mix semillas.",
-        "imagen": "pan_real.jpg",
+        "nombre": "Dúo",
         "tag": "Masa Madre",
-        "precio": 3500
+        "descripcion": "80% harina blanca y 20% integral. Fermentación lenta de 15h con masa madre viva.",
+        "precio": 2500,
+        "imagen": "pan_real.jpg"
     },
     {
-        "id": 2,
+        "id": "prod-2",
+        "categoria": "panaderia",
+        "nombre": "Dúo Semilla",
+        "tag": "Masa Madre",
+        "descripcion": "Masa madre Dúo con mix premium de chía, linaza, maravilla y calabaza.",
+        "precio": 3000,
+        "imagen": "DSC_0263.jpg"
+    },
+    {
+        "id": "prod-3",
+        "categoria": "panaderia",
+        "nombre": "Integral",
+        "tag": "100% Integral",
+        "descripcion": "100% harina integral de molienda fina y fermentación natural de masa madre.",
+        "precio": 4000,
+        "imagen": "DSC_0284.jpg"
+    },
+    {
+        "id": "prod-4",
+        "categoria": "panaderia",
+        "nombre": "Integral Semilla",
+        "tag": "100% Integral",
+        "descripcion": "100% integral con abundante mix tostado de semillas seleccionadas.",
+        "precio": 4500,
+        "imagen": "DSC_0287.jpg"
+    },
+    {
+        "id": "prod-5",
         "categoria": "mermeladas",
         "nombre": "Tomate & Albahaca",
-        "descripcion": "El balance perfecto entre el dulzor del tomate y el aroma de la albahaca fresca recolectada en nuestro huerto.",
-        "imagen": "tomate_albaca.jpg",
         "tag": "Firma",
-        "precio": 4500
+        "descripcion": "Equilibrio perfecto de tomates maduros con albahaca fresca de huerto.",
+        "precio": 3800,
+        "imagen": "Tomate_albaca_2.jpg"
     },
     {
-        "id": 3,
+        "id": "prod-6",
         "categoria": "mermeladas",
         "nombre": "Mermelada de Pimentón",
-        "descripcion": "Elegante y versátil, ideal para maridar con quesos, carnes blancas y picoteos gourmet.",
-        "imagen": "pimenton.jpg",
         "tag": "Especial",
-        "precio": 4500
+        "descripcion": "Mermelada agridulce gourmet, ideal para maridar con quesos y carnes.",
+        "precio": 3800,
+        "imagen": "pimenton.jpg"
     },
     {
-        "id": 4,
+        "id": "prod-7",
         "categoria": "mermeladas",
         "nombre": "Mermelada de Mora",
-        "descripcion": "Sabor intenso y frutal, recolectada en su punto justo de madurez en la precordillera.",
-        "imagen": "mora.jpg",
         "tag": "Bosque",
-        "precio": 4000
+        "descripcion": "Sabor intenso y frutal de moras silvestres de la precordillera.",
+        "precio": 3800,
+        "imagen": "Mermelada Mora 2.jpg"
     },
     {
-        "id": 5,
+        "id": "prod-8",
         "categoria": "mermeladas",
         "nombre": "Mermelada de Berries",
-        "descripcion": "Una explosión de frutos rojos seleccionados: frambuesas, arándanos y frutillas de nuestra zona.",
-        "imagen": "berries.jpg",
         "tag": "Mix",
-        "precio": 4500
+        "descripcion": "Explosión de frutos rojos: frambuesas, arándanos y frutillas del Maule.",
+        "precio": 3800,
+        "imagen": "Mermelada de berries 2.jpg"
     },
     {
-        "id": 6,
-        "categoria": "mermeladas",
-        "nombre": "Mermelada de Ají Cristal",
-        "descripcion": "Un toque atrevido y dulce que sorprende. Ideal para los que buscan un picor sutil y sofisticado.",
-        "imagen": "grupo1.jpg",
-        "tag": "Picante Suave",
-        "precio": 5000
-    },
-    {
-        "id": 7,
+        "id": "prod-9",
         "categoria": "conservas",
         "nombre": "Berenjenas Agridulces",
-        "descripcion": "Nuestra receta secreta agridulce que resalta la textura única de la berenjena asada.",
-        "imagen": "berenjenas_real.jpg",
         "tag": "Gourmet",
-        "precio": 5500
+        "descripcion": "Berenjenas asadas artesanalmente en aceite de oliva con receta agridulce.",
+        "precio": 4200,
+        "imagen": "Berenjena Agridulce 2.jpg"
     },
     {
-        "id": 8,
+        "id": "prod-10",
         "categoria": "conservas",
         "nombre": "Ajos Asados en Aceite de Oliva",
-        "descripcion": "Suaves, cremosos y listos para untar. Una delicia para los amantes del ajo premium.",
-        "imagen": "ajos.jpg",
         "tag": "Novedad",
-        "precio": 6000
+        "descripcion": "Ajos suaves y cremosos listos para untar, en aceite de oliva extra virgen.",
+        "precio": 4500,
+        "imagen": "ajos.jpg"
     },
     {
-        "id": 9,
+        "id": "prod-11",
         "categoria": "conservas",
         "nombre": "Salsa Ají Cacho de Cabra",
-        "descripcion": "El sabor ahumado e intenso con el picor tradicional y rústico del campo chileno.",
-        "imagen": "cacho_cabra.jpg",
         "tag": "Chileno",
-        "precio": 4500
+        "descripcion": "Sabor ahumado e intenso con el picor rústico tradicional del campo chileno.",
+        "precio": 3500,
+        "imagen": "salsa de aji cacho de cabra 2.jpg"
     },
     {
-        "id": 10,
+        "id": "prod-12",
         "categoria": "conservas",
         "nombre": "Salsa de Ají Cristal",
-        "descripcion": "Picor vibrante, fresco y con una fragancia inconfundible. Ideal para comidas diarias.",
-        "imagen": "aji_cristal.jpg",
         "tag": "Aromática",
-        "precio": 4000
+        "descripcion": "Picor fresco, vibrante y aromático para sazonar tus comidas diarias.",
+        "precio": 3500,
+        "imagen": "salsa de aji cristal 2.jpg"
     }
 ]

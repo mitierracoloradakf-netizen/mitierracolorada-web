@@ -1,5 +1,5 @@
 import { db } from './firebase-config.js';
-import { collection, getDocs, query, orderBy, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     // Referencias DOM
@@ -30,54 +30,90 @@ document.addEventListener('DOMContentLoaded', () => {
         return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(price);
     };
 
-    // Inicialización
+    // Helper para normalizar URL de imagen
+    const normalizeImage = (img) => {
+        if (!img) return 'logo.jpeg';
+        if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:')) {
+            return img;
+        }
+        return img.replace(/^\/+/, '');
+    };
+
+    // Ordenar productos
+    const sortProducts = (list) => {
+        return [...list].sort((a, b) => {
+            const numA = parseInt(String(a.id).replace(/\D/g, ''), 10);
+            const numB = parseInt(String(b.id).replace(/\D/g, ''), 10);
+            if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+            return (a.nombre || '').localeCompare(b.nombre || '');
+        });
+    };
+
+    // Inicialización Instantánea (Stale-While-Revalidate)
     const init = async () => {
+        // 1. Carga ultra-rápida desde caché local o productos.json estático para FCP inmediato (0ms)
+        try {
+            const cached = localStorage.getItem('mtc_web_products_cache');
+            if (cached) {
+                products = sortProducts(JSON.parse(cached));
+                renderCatalog();
+            } else {
+                const localRes = await fetch('./productos.json');
+                if (localRes.ok) {
+                    const localData = await localRes.json();
+                    products = sortProducts(localData.map(p => ({ ...p, imagen: normalizeImage(p.imagen) })));
+                    renderCatalog();
+                }
+            }
+        } catch (e) {
+            console.warn("Carga rápida inicial fallback:", e);
+        }
+
+        updateCartUI();
+
+        // 2. Consulta en segundo plano a Firestore para refrescar precios, disponibilidad e imágenes
         try {
             const querySnapshot = await getDocs(collection(db, "productos"));
-            const uniqueMap = new Map();
+            if (!querySnapshot.empty) {
+                const uniqueMap = new Map();
 
-            querySnapshot.forEach((docSnap) => {
-                const data = docSnap.data();
-                const prodId = data.id !== undefined && data.id !== null ? String(data.id) : String(docSnap.id);
-                const normName = (data.nombre || '').toLowerCase().trim();
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const prodId = data.id !== undefined && data.id !== null ? String(data.id) : String(docSnap.id);
+                    const normName = (data.nombre || '').toLowerCase().trim();
+                    
+                    const prodObj = {
+                        ...data,
+                        id: prodId,
+                        imagen: normalizeImage(data.imagen)
+                    };
+
+                    // Desduplicar: Si ya existe, priorizar el que tiene ID 'prod-' oficial
+                    if (!uniqueMap.has(normName) || prodId.startsWith('prod-')) {
+                        uniqueMap.set(normName, prodObj);
+                    }
+                });
+
+                const firestoreProducts = sortProducts(Array.from(uniqueMap.values()));
                 
-                let imgSrc = data.imagen || 'logo.jpeg';
-                if (!imgSrc.startsWith('http') && !imgSrc.startsWith('data:')) {
-                    imgSrc = 'https://mitierracolorada.cl/' + imgSrc.replace(/^\/+/, '');
+                // Actualizar y guardar en caché si hay datos válidos
+                if (firestoreProducts.length > 0) {
+                    products = firestoreProducts;
+                    localStorage.setItem('mtc_web_products_cache', JSON.stringify(products));
+                    renderCatalog();
                 }
-
-                const prodObj = {
-                    ...data,
-                    id: prodId,
-                    imagen: imgSrc
-                };
-
-                // Desduplicar: Si ya existe, priorizar el que tiene ID 'prod-' oficial
-                if (!uniqueMap.has(normName) || prodId.startsWith('prod-')) {
-                    uniqueMap.set(normName, prodObj);
-                }
-            });
-
-            products = Array.from(uniqueMap.values());
-
-            // Ordenar por ID o por nombre
-            products.sort((a, b) => {
-                const numA = parseInt(String(a.id).replace(/\D/g, ''), 10);
-                const numB = parseInt(String(b.id).replace(/\D/g, ''), 10);
-                if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
-                return (a.nombre || '').localeCompare(b.nombre || '');
-            });
-            
-            renderCatalog();
-            updateCartUI();
+            }
         } catch (error) {
             console.error("Error cargando productos de Firebase:", error);
-            catalogContainer.innerHTML = '<p style="text-align:center;color:red;">Error al cargar el catálogo. Por favor, intente más tarde.</p>';
+            if (products.length === 0) {
+                catalogContainer.innerHTML = '<p style="text-align:center;color:red;">Error al cargar el catálogo. Por favor, intente más tarde.</p>';
+            }
         }
     };
 
     // Renderizar Catálogo
     const renderCatalog = () => {
+        if (!catalogContainer) return;
         catalogContainer.innerHTML = '';
         
         const categories = {
@@ -89,10 +125,17 @@ document.addEventListener('DOMContentLoaded', () => {
             aceites: '🫒 Aceites'
         };
 
+        let renderedCount = 0;
+
         for (const [key, title] of Object.entries(categories)) {
-            const categoryProducts = products.filter(p => p.categoria === key && p.activo !== false && p.disponible !== false && p.publicadoWeb !== false);
+            const categoryProducts = products.filter(p => {
+                const matchesCategory = p.categoria === key;
+                const isEnabled = p.disponibleWeb !== false && p.activo !== false && p.disponible !== false && p.publicadoWeb !== false;
+                return matchesCategory && isEnabled;
+            });
             
             if (categoryProducts.length > 0) {
+                renderedCount += categoryProducts.length;
                 const categoryBlock = document.createElement('div');
                 categoryBlock.className = 'category-block';
                 
@@ -107,14 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const card = document.createElement('div');
                     card.className = 'product-card';
                     card.innerHTML = `
-                        <span class="product-tag">${product.tag || ''}</span>
-                        <img src="${product.imagen}" alt="${product.nombre}" class="product-img" loading="lazy" decoding="async" width="400" height="300" onerror="this.src='logo.jpeg'">
+                        ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}
+                        <img src="${product.imagen}" alt="${product.nombre}" class="product-img" loading="lazy" decoding="async" width="400" height="300" onerror="this.onerror=null;this.src='logo.jpeg'">
                         <div class="product-info">
                             <h4>${product.nombre}</h4>
                             <p class="product-desc">${product.descripcion || ''}</p>
                             <div class="product-price">${formatPrice(product.precio)}</div>
                             <div class="add-to-cart-group">
-                                <input type="number" class="qty-input" id="qty-${product.id}" value="1" min="1" max="99">
+                                <input type="number" class="qty-input" id="qty-${product.id}" value="1" min="1" max="99" aria-label="Cantidad">
                                 <button type="button" class="btn btn-primary btn-add" data-id="${product.id}">Agregar</button>
                             </div>
                         </div>
@@ -125,6 +168,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 categoryBlock.appendChild(productGrid);
                 catalogContainer.appendChild(categoryBlock);
             }
+        }
+
+        if (renderedCount === 0) {
+            catalogContainer.innerHTML = '<p style="text-align:center; padding: 2rem; color: #888;">No hay productos disponibles por el momento.</p>';
+            return;
         }
 
         // Agregar eventos a botones
@@ -183,15 +231,16 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const updateCartUI = () => {
+        if (!cartItemsContainer || !cartTotalPrice || !cartCount) return;
         cartItemsContainer.innerHTML = '';
         let total = 0;
         let count = 0;
 
         if (cart.length === 0) {
-            cartItemsContainer.innerHTML = '<p class="muted">Tu carrito está vacío.</p>';
+            cartItemsContainer.innerHTML = '<p class="muted" style="text-align: center; padding: 2rem 0; color: #888;">Tu carrito está vacío.</p>';
         } else {
             cart.forEach(item => {
-                const itemTotal = item.precio * item.quantity;
+                const itemTotal = (item.precio || 0) * item.quantity;
                 total += itemTotal;
                 count += item.quantity;
                 
@@ -224,20 +273,22 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const openCart = () => {
+        if (!cartSidebar || !cartOverlay) return;
         cartSidebar.classList.add('active');
         cartOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
     };
 
     const closeCart = () => {
+        if (!cartSidebar || !cartOverlay) return;
         cartSidebar.classList.remove('active');
         cartOverlay.classList.remove('active');
         document.body.style.overflow = '';
     };
 
-    openCartBtn.addEventListener('click', openCart);
-    closeCartBtn.addEventListener('click', closeCart);
-    cartOverlay.addEventListener('click', closeCart);
+    if (openCartBtn) openCartBtn.addEventListener('click', openCart);
+    if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
+    if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
 
     // Checkout functions
     const validateForm = () => {
@@ -249,7 +300,6 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Por favor, completa todos tus datos de entrega, incluyendo el teléfono.');
             return false;
         }
-        // Validar telefono min length
         if (inputPhone.value.trim().length < 8) {
             alert('Por favor, ingresa un número de teléfono válido.');
             return false;
@@ -262,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let total = 0;
         
         cart.forEach(item => {
-            const itemTotal = item.precio * item.quantity;
+            const itemTotal = (item.precio || 0) * item.quantity;
             total += itemTotal;
             text += `- ${item.quantity}x ${item.nombre} (${formatPrice(itemTotal)})\n`;
         });
@@ -280,63 +330,65 @@ document.addEventListener('DOMContentLoaded', () => {
         return text;
     };
 
-    btnCheckoutWsp.addEventListener('click', async () => {
-        if (!validateForm()) return;
-        
-        const originalText = btnCheckoutWsp.textContent;
-        btnCheckoutWsp.textContent = 'Procesando...';
-        btnCheckoutWsp.disabled = true;
-
-        try {
-            // Guardar pedido en Firebase "pedidos_web"
-            const orderData = {
-                cliente: {
-                    nombre: `${inputName.value.trim()} ${inputLastname.value.trim()}`,
-                    telefono: inputPhone.value.trim(),
-                    direccion: inputAddress.value.trim()
-                },
-                fecha_deseada: inputDate.value.trim(),
-                productos: cart.map(item => ({
-                    id: item.id,
-                    nombre: item.nombre,
-                    precio: item.precio,
-                    cantidad: item.quantity,
-                    subtotal: item.precio * item.quantity
-                })),
-                total: cart.reduce((acc, item) => acc + (item.precio * item.quantity), 0),
-                estado: "Pendiente",
-                origen: "Web",
-                fecha_creacion: serverTimestamp()
-            };
-
-            await addDoc(collection(db, "pedidos_web"), orderData);
-
-            // Generar link WhatsApp
-            const text = encodeURIComponent(buildOrderText());
-            const phone = '56978521748';
-            window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+    if (btnCheckoutWsp) {
+        btnCheckoutWsp.addEventListener('click', async () => {
+            if (!validateForm()) return;
             
-            // Desocupar el carro después de enviar
-            cart = [];
-            saveCart();
-            updateCartUI();
-            
-            // Limpiar el formulario y cerrar el modal
-            inputName.value = '';
-            inputLastname.value = '';
-            inputAddress.value = '';
-            inputPhone.value = '+56 ';
-            inputDate.value = '';
-            closeCart();
+            const originalText = btnCheckoutWsp.textContent;
+            btnCheckoutWsp.textContent = 'Procesando...';
+            btnCheckoutWsp.disabled = true;
 
-        } catch (error) {
-            console.error("Error al guardar el pedido:", error);
-            alert("Hubo un error al procesar tu pedido: " + error.message);
-        } finally {
-            btnCheckoutWsp.textContent = originalText;
-            btnCheckoutWsp.disabled = false;
-        }
-    });
+            try {
+                // Guardar pedido en Firebase "pedidos_web"
+                const orderData = {
+                    cliente: {
+                        nombre: `${inputName.value.trim()} ${inputLastname.value.trim()}`,
+                        telefono: inputPhone.value.trim(),
+                        direccion: inputAddress.value.trim()
+                    },
+                    fecha_deseada: inputDate.value.trim(),
+                    productos: cart.map(item => ({
+                        id: item.id,
+                        nombre: item.nombre,
+                        precio: item.precio,
+                        cantidad: item.quantity,
+                        subtotal: (item.precio || 0) * item.quantity
+                    })),
+                    total: cart.reduce((acc, item) => acc + ((item.precio || 0) * item.quantity), 0),
+                    estado: "Pendiente",
+                    origen: "Web",
+                    fecha_creacion: serverTimestamp()
+                };
+
+                await addDoc(collection(db, "pedidos_web"), orderData);
+
+                // Generar link WhatsApp
+                const text = encodeURIComponent(buildOrderText());
+                const phone = '56978521748';
+                window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+                
+                // Desocupar el carro después de enviar
+                cart = [];
+                saveCart();
+                updateCartUI();
+                
+                // Limpiar el formulario y cerrar el modal
+                inputName.value = '';
+                inputLastname.value = '';
+                inputAddress.value = '';
+                inputPhone.value = '+56 ';
+                inputDate.value = '';
+                closeCart();
+
+            } catch (error) {
+                console.error("Error al guardar el pedido:", error);
+                alert("Hubo un error al procesar tu pedido: " + error.message);
+            } finally {
+                btnCheckoutWsp.textContent = originalText;
+                btnCheckoutWsp.disabled = false;
+            }
+        });
+    }
 
     // Iniciar app
     init();
