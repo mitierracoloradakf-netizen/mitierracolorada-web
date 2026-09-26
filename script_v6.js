@@ -130,10 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Renderizar Catálogo
+    // Renderizar Catálogo en un solo pase de renderizado ultra-rápido (0ms reflow)
     const renderCatalog = () => {
         if (!catalogContainer) return;
-        catalogContainer.innerHTML = '';
         
         const categories = {
             panaderia: '🥖 Panadería Artesanal',
@@ -145,6 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         let renderedCount = 0;
+        let htmlBuffer = '';
 
         for (const [key, title] of Object.entries(categories)) {
             const categoryProducts = products.filter(p => {
@@ -155,37 +155,35 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (categoryProducts.length > 0) {
                 renderedCount += categoryProducts.length;
-                const categoryBlock = document.createElement('div');
-                categoryBlock.className = 'category-block';
-                
-                const categoryTitle = document.createElement('h3');
-                categoryTitle.textContent = title;
-                categoryBlock.appendChild(categoryTitle);
-                
-                const productGrid = document.createElement('div');
-                productGrid.className = 'product-grid';
+                htmlBuffer += `
+                    <div class="category-block">
+                        <h3>${title}</h3>
+                        <div class="product-grid">
+                `;
                 
                 categoryProducts.forEach(product => {
-                    const card = document.createElement('div');
-                    card.className = 'product-card';
-                    card.innerHTML = `
-                        ${product.tag ? `<span class="product-tag">${product.tag}</span>` : ''}
-                        <img src="${product.imagen}" alt="${product.nombre}" class="product-img" loading="lazy" decoding="async" width="400" height="300" onerror="this.onerror=null;this.src='logo.jpeg'">
-                        <div class="product-info">
-                            <h4>${product.nombre}</h4>
-                            <p class="product-desc">${product.descripcion || ''}</p>
-                            <div class="product-price">${formatPrice(product.precio)}</div>
-                            <div class="add-to-cart-group">
-                                <input type="number" class="qty-input" id="qty-${product.id}" value="1" min="1" max="99" aria-label="Cantidad">
-                                <button type="button" class="btn btn-primary btn-add" data-id="${product.id}">Agregar</button>
+                    const tagHtml = product.tag ? `<span class="product-tag">${product.tag}</span>` : '';
+                    htmlBuffer += `
+                        <div class="product-card">
+                            ${tagHtml}
+                            <img src="${product.imagen}" alt="${product.nombre}" class="product-img" loading="lazy" decoding="async" width="400" height="300" onerror="this.onerror=null;this.src='logo.jpeg'">
+                            <div class="product-info">
+                                <h4>${product.nombre}</h4>
+                                <p class="product-desc">${product.descripcion || ''}</p>
+                                <div class="product-price">${formatPrice(product.precio)}</div>
+                                <div class="add-to-cart-group">
+                                    <input type="number" class="qty-input" id="qty-${product.id}" value="1" min="1" max="99" aria-label="Cantidad">
+                                    <button type="button" class="btn btn-primary btn-add" data-id="${product.id}">Agregar</button>
+                                </div>
                             </div>
                         </div>
                     `;
-                    productGrid.appendChild(card);
                 });
                 
-                categoryBlock.appendChild(productGrid);
-                catalogContainer.appendChild(categoryBlock);
+                htmlBuffer += `
+                        </div>
+                    </div>
+                `;
             }
         }
 
@@ -194,29 +192,33 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Agregar eventos a botones
-        document.querySelectorAll('.btn-add').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const targetBtn = e.currentTarget || e.target.closest('.btn-add');
-                const id = String(targetBtn.getAttribute('data-id'));
-                const qtyInput = document.getElementById(`qty-${id}`);
-                const qty = qtyInput ? (parseInt(qtyInput.value, 10) || 1) : 1;
-                
-                addToCart(id, qty);
-                if (qtyInput) qtyInput.value = 1; // reset
-                
-                const originalText = targetBtn.textContent;
-                targetBtn.textContent = '¡Agregado!';
-                targetBtn.style.backgroundColor = '#25D366';
-                targetBtn.style.borderColor = '#25D366';
-                setTimeout(() => {
-                    targetBtn.textContent = originalText;
-                    targetBtn.style.backgroundColor = '';
-                    targetBtn.style.borderColor = '';
-                }, 1000);
-            });
-        });
+        catalogContainer.innerHTML = htmlBuffer;
     };
+
+    // Delegación de eventos para agregar al carrito (más rápido y sin fugas de memoria)
+    if (catalogContainer) {
+        catalogContainer.addEventListener('click', (e) => {
+            const targetBtn = e.target.closest('.btn-add');
+            if (!targetBtn) return;
+            
+            const id = String(targetBtn.getAttribute('data-id'));
+            const qtyInput = document.getElementById(`qty-${id}`);
+            const qty = qtyInput ? (parseInt(qtyInput.value, 10) || 1) : 1;
+            
+            addToCart(id, qty);
+            if (qtyInput) qtyInput.value = 1; // reset
+            
+            const originalText = targetBtn.textContent;
+            targetBtn.textContent = '¡Agregado!';
+            targetBtn.style.backgroundColor = '#25D366';
+            targetBtn.style.borderColor = '#25D366';
+            setTimeout(() => {
+                targetBtn.textContent = originalText;
+                targetBtn.style.backgroundColor = '';
+                targetBtn.style.borderColor = '';
+            }, 1000);
+        });
+    }
 
     // Lógica del Carrito
     const addToCart = (productId, quantity) => {

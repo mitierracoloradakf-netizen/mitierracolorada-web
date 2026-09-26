@@ -337,6 +337,16 @@ a:hover {
     background-color: var(--bg-white);
 }
 
+.section {
+    padding: 5rem 0;
+    contain: layout paint;
+}
+
+#essence, #preparaciones, #contact {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 700px;
+}
+
 .section-title {
     text-align: center;
     font-size: 2.3rem;
@@ -370,8 +380,10 @@ a:hover {
 .essence-img {
     width: 100%;
     height: 400px;
+    aspect-ratio: 3 / 2;
     object-fit: cover;
     transition: transform 0.5s ease;
+    transform: translateZ(0);
 }
 
 .essence-img-wrapper:hover .essence-img {
@@ -545,6 +557,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     position: relative;
+    contain: content;
 }
 
 .product-card:hover {
@@ -570,9 +583,11 @@ a:hover {
 .product-img {
     width: 100%;
     height: 200px;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
     border-bottom: 1px solid var(--border-color);
     background-color: var(--bg-alt);
+    transform: translateZ(0);
 }
 
 .product-info {
