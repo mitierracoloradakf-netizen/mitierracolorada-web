@@ -108,13 +108,13 @@
         "imagen": "berries.jpg"
     },
     {
-        "id": "prod-17",
+        "id": "prod-1785547494997",
         "categoria": "mermeladas",
-        "nombre": "Mermelada de Membrillo",
+        "nombre": "Mermelada de menbrillo",
         "tag": "Tradición",
         "descripcion": "Sabor nostálgico del campo chileno, cocinado lentamente con membrillos aromáticos de huerto.",
         "precio": 5000,
-        "imagen": "grupo1.jpg"
+        "imagen": "https://i.ibb.co/BKKrp762/mermelada-de-membrillo.jpg"
     },
     {
         "id": "prod-9",
