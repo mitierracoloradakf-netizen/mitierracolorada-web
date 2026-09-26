@@ -54,24 +54,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const CACHE_KEY = 'mtc_web_products_v4';
+    const CACHE_KEY = 'mtc_web_products_v5';
 
     // Inicialización Instantánea (Stale-While-Revalidate)
     const init = async () => {
         // Limpiar versiones viejas de caché
         try {
             localStorage.removeItem('mtc_web_products_cache');
+            localStorage.removeItem('mtc_web_products_v4');
             localStorage.removeItem('mtc_products');
         } catch(e){}
 
-        // 1. Carga ultra-rápida desde caché v4 o productos.json estático para FCP inmediato (0ms)
+        // 1. Carga ultra-rápida desde caché v5 o productos.json estático para FCP inmediato (0ms)
         try {
             const cached = localStorage.getItem(CACHE_KEY);
             if (cached) {
                 products = sortProducts(JSON.parse(cached));
                 renderCatalog();
             } else {
-                const localRes = await fetch('./productos.json?v=16');
+                const localRes = await fetch('./productos.json?v=18');
                 if (localRes.ok) {
                     const localData = await localRes.json();
                     products = sortProducts(localData.map(p => ({ ...p, imagen: normalizeImage(p.imagen) })));
@@ -148,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (const [key, title] of Object.entries(categories)) {
             const categoryProducts = products.filter(p => {
                 const matchesCategory = p.categoria === key;
-                const isEnabled = p.disponibleWeb !== false && p.activo !== false && p.disponible !== false && p.publicadoWeb !== false;
+                const isEnabled = p.disponibleWeb !== false && p.publicadoWeb !== false;
                 return matchesCategory && isEnabled;
             });
             

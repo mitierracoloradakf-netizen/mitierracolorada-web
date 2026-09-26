@@ -81,13 +81,13 @@
         "imagen": "Mermelada de alcayota.jpg"
     },
     {
-        "id": "prod-14",
+        "id": "prod-1785547400134",
         "categoria": "mermeladas",
-        "nombre": "Mermelada de Ají",
+        "nombre": "Mermelada de aji",
         "tag": "Picante Suave",
-        "descripcion": "El toque agridulce y picante justo. Perfecta para acompañar tablas de quesos, carnes y aperitivos.",
+        "descripcion": "El toque agridulce y picante justo. Perfecta para acompañar tablas de quesos, carnes y aperitivos. 250 ml. aprox.",
         "precio": 5000,
-        "imagen": "aji_cristal.jpg"
+        "imagen": "https://i.ibb.co/qY9tsJg7/mermelada-de-aji.jpg"
     },
     {
         "id": "prod-15",
@@ -153,12 +153,12 @@
         "imagen": "salsa de aji cristal 2.jpg"
     },
     {
-        "id": "prod-13",
+        "id": "prod-1787099649405",
         "categoria": "conservas",
-        "nombre": "Mantequilla de Maní",
+        "nombre": "Mantequilla de mani",
         "tag": "100% Natural",
-        "descripcion": "100% maní tostado seleccionado, cremosa y natural. Sin azúcares añadidos ni preservantes.",
+        "descripcion": "100% maní tostado seleccionado, cremosa y natural. Sin azúcares añadidos ni aceites hidrogenados. 250 ml. aprox",
         "precio": 5000,
-        "imagen": "grupo1.jpg"
+        "imagen": "https://i.ibb.co/F4S8Nn92/mantequilla-de-mani.jpg"
     }
 ]
