@@ -96,7 +96,7 @@
         "tag": "Caramelizada",
         "descripcion": "Cebollas cocinadas lentamente con un toque agridulce. Ideal para carnes, hamburguesas y quesos maduros.",
         "precio": 5000,
-        "imagen": "grupo2.jpg"
+        "imagen": "cebolla.jpg"
     },
     {
         "id": "prod-16",
@@ -105,7 +105,7 @@
         "tag": "Tradicional",
         "descripcion": "Frambuesas frescas seleccionadas del Maule. Dulzor equilibrado con notas cítricas naturales.",
         "precio": 5000,
-        "imagen": "berries.jpg"
+        "imagen": "frambuesa.jpg"
     },
     {
         "id": "prod-1785547494997",
