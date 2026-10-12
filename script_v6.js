@@ -30,6 +30,20 @@ document.addEventListener('DOMContentLoaded', () => {
         return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(price);
     };
 
+    // Peso, Gramaje o Mililitros (campo "peso" del mantenedor de productos de la App de Pedidos)
+    const getPeso = (product) => {
+        if (!product || product.peso === undefined || product.peso === null) return '';
+        return String(product.peso).trim();
+    };
+
+    // Escapar texto libre ingresado en la app antes de inyectarlo en HTML
+    const escapeHtml = (str) => String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+
     // Helper para normalizar URL de imagen
     const normalizeImage = (img) => {
         if (!img) return 'logo.jpeg';
@@ -120,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     products = firestoreProducts;
                     localStorage.setItem(CACHE_KEY, JSON.stringify(products));
                     renderCatalog();
+                    updateCartUI();
                 }
             }
         } catch (error) {
@@ -163,12 +178,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 categoryProducts.forEach(product => {
                     const tagHtml = product.tag ? `<span class="product-tag">${product.tag}</span>` : '';
+                    const pesoVal = getPeso(product);
+                    const pesoHtml = pesoVal ? `<span class="product-weight" title="Peso / Contenido neto">⚖️ ${escapeHtml(pesoVal)}</span>` : '';
                     htmlBuffer += `
                         <div class="product-card">
                             ${tagHtml}
                             <img src="${product.imagen}" alt="${product.nombre}" class="product-img" loading="lazy" decoding="async" width="400" height="300" onerror="this.onerror=null;this.src='logo.jpeg'">
                             <div class="product-info">
                                 <h4>${product.nombre}</h4>
+                                ${pesoHtml}
                                 <p class="product-desc">${product.descripcion || ''}</p>
                                 <div class="product-price">${formatPrice(product.precio)}</div>
                                 <div class="add-to-cart-group">
@@ -251,6 +269,12 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('mtc_cart', JSON.stringify(cart));
     };
 
+    // Peso del ítem en carrito: prioriza el dato vigente del catálogo (por si cambió en la App)
+    const getCartItemPeso = (item) => {
+        const current = products.find(p => String(p.id) === String(item.id));
+        return getPeso(current) || getPeso(item);
+    };
+
     const updateCartUI = () => {
         if (!cartItemsContainer || !cartTotalPrice || !cartCount) return;
         cartItemsContainer.innerHTML = '';
@@ -267,9 +291,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'cart-item';
+                const itemPeso = getCartItemPeso(item);
                 itemDiv.innerHTML = `
                     <div class="cart-item-info">
-                        <h5>${item.nombre}</h5>
+                        <h5>${item.nombre}${itemPeso ? ` <span class="cart-item-weight">(${escapeHtml(itemPeso)})</span>` : ''}</h5>
                         <p>${item.quantity}x ${formatPrice(item.precio)}</p>
                     </div>
                     <div style="display: flex; align-items: center;">
@@ -335,7 +360,8 @@ document.addEventListener('DOMContentLoaded', () => {
         cart.forEach(item => {
             const itemTotal = (item.precio || 0) * item.quantity;
             total += itemTotal;
-            text += `- ${item.quantity}x ${item.nombre} (${formatPrice(itemTotal)})\n`;
+            const itemPeso = getCartItemPeso(item);
+            text += `- ${item.quantity}x ${item.nombre}${itemPeso ? ` [${itemPeso}]` : ''} (${formatPrice(itemTotal)})\n`;
         });
         
         const dateParts = inputDate.value.split('-');
@@ -371,6 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     productos: cart.map(item => ({
                         id: item.id,
                         nombre: item.nombre,
+                        peso: getCartItemPeso(item),
                         precio: item.precio,
                         cantidad: item.quantity,
                         subtotal: (item.precio || 0) * item.quantity

@@ -602,6 +602,29 @@ a:hover {
     margin-bottom: 0.4rem;
 }
 
+/* Peso, Gramaje o Mililitros (desde el mantenedor de la App de Pedidos) */
+.product-weight {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background-color: #F4EBE2;
+    color: #5D4037;
+    border: 1px solid #D7CCC8;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--border-radius-full);
+    margin-bottom: 0.6rem;
+    white-space: nowrap;
+}
+
+.cart-item-weight {
+    font-size: 0.8em;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
 .product-desc {
     color: var(--text-light);
     font-size: 0.88rem;
