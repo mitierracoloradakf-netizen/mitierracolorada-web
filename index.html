@@ -6,10 +6,6 @@
     <title>Mi Tierra Colorada | Sabores Artesanales de Parral</title>
     <meta name="description" content="Descubre la esencia de Parral con Mi Tierra Colorada. Panes de masa madre, mermeladas gourmet y conservas ecológicas del Maule, Chile. Sabor 100% artesanal.">
     
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    
     <!-- Optimización de conexiones y precarga de recursos críticos -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,12 +14,12 @@
     <link rel="preconnect" href="https://i.ibb.co" crossorigin>
     <link rel="dns-prefetch" href="https://i.ibb.co">
     
-    <link rel="preload" href="productos.json?v=19" as="fetch" crossorigin>
-    <link rel="preload" href="pan_real.jpg" as="image" fetchpriority="high">
+    <link rel="preload" href="productos.json?v=20" as="fetch" crossorigin>
+    <link rel="preload" href="grupo2.jpg" as="image" fetchpriority="high">
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css?v=14">
+    <link rel="stylesheet" href="style.css?v=18">
     
     <!-- Meta tags sociales -->
     <meta property="og:title" content="Mi Tierra Colorada | Sabores Artesanales">
@@ -51,7 +47,10 @@
         <div class="nav-container container">
             <a href="#home" class="logo">
                 <img src="logo.jpeg" alt="Logo Mi Tierra Colorada" width="44" height="44" loading="lazy">
-                <span>Mi Tierra Colorada</span>
+                <div class="logo-text-group">
+                    <span class="logo-title">Mi Tierra Colorada</span>
+                    <span class="logo-sub">Parral • Maule</span>
+                </div>
             </a>
             <div class="nav-links">
                 <a href="#essence">Esencia</a>
@@ -73,43 +72,97 @@
     <header id="home" class="hero">
         <div class="hero-content">
             <span class="hero-pill">🌾 100% Agroecológico & Artesanal • Parral, Maule</span>
-            <h1>Sabores de nuestra tierra,<br>directo a tu mesa.</h1>
-            <p>Mermeladas gourmet, conservas del campo y panadería de masa madre real. Sin químicos, sin prisas.</p>
-            <a href="#products" class="btn btn-primary">Ver Catálogo de Productos</a>
+            <h1>Sabores de nuestra tierra,<br><em>directo a tu mesa.</em></h1>
+            <p>Mermeladas gourmet, conservas del campo y panadería de masa madre real. Sin químicos ni preservantes industriales, elaborados con paciencia en la precordillera de Parral.</p>
+            <div class="hero-actions">
+                <a href="#products" class="btn btn-primary">Explorar Catálogo</a>
+                <a href="#essence" class="btn btn-secondary">Nuestra Esencia</a>
+            </div>
+            <div class="hero-delivery-badge">
+                <span>🚚 Reparto sin costo en Parral urbano • Horneo fresco semanal</span>
+            </div>
         </div>
     </header>
 
+    <!-- Pilares & Valor Agroecológico (Sección de Confianza Stitch) -->
+    <section class="pillars-section">
+        <div class="container">
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <div class="pillar-icon-box icon-olive">
+                        <span>🥖</span>
+                    </div>
+                    <div class="pillar-text">
+                        <h4>Masa Madre Viva</h4>
+                        <p>Harinas seleccionadas, sal marina y cultivo biológico de 15h sin levaduras industriales.</p>
+                    </div>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon-box icon-terracotta">
+                        <span>🍓</span>
+                    </div>
+                    <div class="pillar-text">
+                        <h4>Fruta Precordillerana</h4>
+                        <p>Moras, frambuesas y berries recolectados en su punto óptimo de madurez y dulzor.</p>
+                    </div>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon-box icon-gold">
+                        <span>🫒</span>
+                    </div>
+                    <div class="pillar-text">
+                        <h4>Oliva Extra Virgen</h4>
+                        <p>Prensado en frío en el secano maulino para conservas y hortalizas asadas.</p>
+                    </div>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon-box icon-clay">
+                        <span>🚚</span>
+                    </div>
+                    <div class="pillar-text">
+                        <h4>Despacho Parral Gratis</h4>
+                        <p>Entrega directa en el radio urbano sin costo y envíos por pagar a otras comunas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <main>
-        <!-- Nuestra Esencia -->
+        <!-- Nuestra Esencia & Filosofía Campesina -->
         <section id="essence" class="section">
             <div class="container">
-                <h2 class="section-title">Nuestra Esencia</h2>
-                <p class="section-subtitle">Cultivamos y elaboramos con respeto profundo por el ciclo natural de la tierra.</p>
-                <div class="essence-grid">
-                    <div class="essence-img-wrapper">
-                        <img src="grupo1.jpg" alt="Producción artesanal Mi Tierra Colorada" width="600" height="400" loading="lazy" decoding="async" class="essence-img">
+                <div class="essence-editorial-grid">
+                    <div class="essence-mosaic">
+                        <div class="mosaic-item mosaic-item-1">
+                            <img src="grupo1.jpg" alt="Producción artesanal Mi Tierra Colorada" width="500" height="400" loading="lazy" decoding="async">
+                        </div>
+                        <div class="mosaic-item mosaic-item-2">
+                            <img src="pan_1.jpg" alt="Pan de masa madre artesanal" width="400" height="350" loading="lazy" decoding="async">
+                        </div>
                     </div>
-                    <div class="essence-text">
-                        <h3>Tradición, Sostenibilidad y Cariño</h3>
-                        <p>Ubicados en la precordillera de Parral, Región del Maule, rescatamos el patrimonio gastronómico local a través de procesos 100% artesanales y libres de preservantes industriales.</p>
-                        <p>Creemos en la soberanía alimentaria y en llevar a tu hogar alimentos reales que nutren cuerpo y alma.</p>
+                    <div class="essence-story">
+                        <span class="editorial-badge">🌾 Nuestra Filosofía</span>
+                        <h2 class="editorial-title">El valor de la lentitud y la memoria de la tierra</h2>
+                        <blockquote class="editorial-quote">
+                            «No aceleramos ningún proceso: el pan se fermenta al compás del clima y las frutas se cocinan cuando el campo nos las regala.»
+                        </blockquote>
+                        <p class="editorial-body">
+                            Ubicados en los faldeos precordilleranos de Parral, en la Región del Maule, rescatamos el patrimonio gastronómico local a través de procesos 100% artesanales y libres de preservantes industriales. Creemos en la soberanía alimentaria y en llevar a tu hogar alimentos reales que nutren cuerpo y alma.
+                        </p>
                         
-                        <div class="essence-features">
-                            <div class="essence-feat-item">
-                                <span class="essence-feat-icon">🌾</span>
-                                <span>Masa Madre Viva</span>
+                        <div class="essence-metrics">
+                            <div class="metric-card">
+                                <span class="metric-num">15h</span>
+                                <span class="metric-label">Fermentación biológica</span>
                             </div>
-                            <div class="essence-feat-item">
-                                <span class="essence-feat-icon">🍓</span>
-                                <span>Fruta Seleccionada</span>
+                            <div class="metric-card">
+                                <span class="metric-num">0%</span>
+                                <span class="metric-label">Químicos y aditivos</span>
                             </div>
-                            <div class="essence-feat-item">
-                                <span class="essence-feat-icon">🫒</span>
-                                <span>Aceite de Oliva Extra</span>
-                            </div>
-                            <div class="essence-feat-item">
-                                <span class="essence-feat-icon">🚚</span>
-                                <span>Envío Gratis en Parral</span>
+                            <div class="metric-card">
+                                <span class="metric-num">100%</span>
+                                <span class="metric-label">Origen Maule Sur</span>
                             </div>
                         </div>
                     </div>
@@ -127,7 +180,7 @@
                     <!-- Tarjeta 1: Masa Madre -->
                     <div class="prep-card">
                         <div class="prep-img-wrapper">
-                            <img src="pan_real.jpg" alt="Panadería de Masa Madre" class="prep-img" loading="lazy" decoding="async">
+                            <img src="pan_1.jpg" alt="Panadería de Masa Madre" class="prep-img" loading="lazy" decoding="async">
                             <span class="prep-badge">🌾 12 a 15 hrs de fermentación</span>
                         </div>
                         <div class="prep-body">
@@ -224,28 +277,56 @@
         <!-- Contacto -->
         <section id="contact" class="section bg-light">
             <div class="container">
+                <h2 class="section-title">Contáctanos & Pedidos</h2>
+                <p class="section-subtitle">Estamos en la precordillera de Parral, Valle del Maule. Escríbenos para pedidos, despachos o consultas.</p>
+                
                 <div class="contact-grid">
-                    <div class="contact-info">
-                        <h2 class="section-title" style="text-align: left; margin-bottom: 1.2rem;">Contáctanos</h2>
-                        <p>Haz tu pedido o cotización directamente por WhatsApp. Coordinamos entregas locales en Parral y despachos interurbanos.</p>
-                        <ul class="contact-list">
-                            <li>
-                                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                <a href="https://www.google.com/maps/place/Mi+tierra+Colorada+(Venta+de+productos+caseros)/@-36.2451355,-71.5971841,20.5z/data=!4m11!1m4!7m3!1m1!1s106258766744368712650!2e2!3m5!1s0x2988d07314da0e25:0x4fa34137aab78872!8m2!3d-36.2450885!4d-71.597017!16s%2Fg%2F11kbd47z48" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;" title="Ver ubicación en Google Maps">Precordillera de Parral, Región del Maule</a>
-                            </li>
-                            <li>
-                                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                <a href="https://wa.me/56978521748?text=Hola%20Mi%20Tierra%20Colorada,%20me%20gustar%C3%ADa%20hacer%20una%20consulta." target="_blank" style="color: inherit; text-decoration: none; font-weight: 600;">+56 9 7852 1748 <span style="font-size: 0.8rem; color: #25D366; margin-left: 5px;">(WhatsApp 💬)</span></a>
-                            </li>
-                            <li>
-                                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                <a href="mailto:mitierracolorada.kf@gmail.com" style="color: inherit; text-decoration: none;">mitierracolorada.kf@gmail.com</a>
-                            </li>
-                            <li>
-                                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                                <a href="https://instagram.com/mitierracoloradaparral" target="_blank">@mitierracoloradaparral</a>
-                            </li>
-                        </ul>
+                    <!-- Tarjeta WhatsApp -->
+                    <div class="contact-card">
+                        <div class="contact-card-icon icon-olive">
+                            <span>💬</span>
+                        </div>
+                        <h4>WhatsApp Directo</h4>
+                        <p>Atención directa para coordinar pedidos frescos, cotizaciones y fechas de horneo.</p>
+                        <a href="https://wa.me/56978521748?text=Hola%20Mi%20Tierra%20Colorada,%20me%20gustar%C3%ADa%20hacer%20un%20pedido." target="_blank" rel="noopener noreferrer" class="contact-card-link">
+                            +56 9 7852 1748 &rarr;
+                        </a>
+                    </div>
+
+                    <!-- Tarjeta Ubicación -->
+                    <div class="contact-card">
+                        <div class="contact-card-icon icon-clay">
+                            <span>📍</span>
+                        </div>
+                        <h4>Taller Campesino</h4>
+                        <p>Precordillera de Parral, Región del Maule. Punto de retiro y origen agroecológico.</p>
+                        <a href="https://www.google.com/maps/place/Mi+tierra+Colorada+(Venta+de+productos+caseros)/@-36.2451355,-71.5971841,20.5z/data=!4m11!1m4!7m3!1m1!1s106258766744368712650!2e2!3m5!1s0x2988d07314da0e25:0x4fa34137aab78872!8m2!3d-36.2450885!4d-71.597017!16s%2Fg%2F11kbd47z48" target="_blank" rel="noopener noreferrer" class="contact-card-link">
+                            Ver en Google Maps &rarr;
+                        </a>
+                    </div>
+
+                    <!-- Tarjeta Instagram Oficial -->
+                    <div class="contact-card">
+                        <div class="contact-card-icon icon-gold">
+                            <span>📸</span>
+                        </div>
+                        <h4>Instagram Oficial</h4>
+                        <p>Sigue el día a día de nuestros horneos, cosechas de berries y fotos de nuevos sabores.</p>
+                        <a href="https://instagram.com/mitierracoloradaparral" target="_blank" rel="noopener noreferrer" class="contact-card-link">
+                            @mitierracoloradaparral &rarr;
+                        </a>
+                    </div>
+
+                    <!-- Tarjeta Correo -->
+                    <div class="contact-card">
+                        <div class="contact-card-icon icon-terracotta">
+                            <span>✉️</span>
+                        </div>
+                        <h4>Correo Electrónico</h4>
+                        <p>Para pedidos corporativos, ferias gourmet y colaboraciones comunitarias.</p>
+                        <a href="mailto:mitierracolorada.kf@gmail.com" class="contact-card-link">
+                            mitierracolorada.kf@gmail.com &rarr;
+                        </a>
                     </div>
                 </div>
             </div>
@@ -254,8 +335,20 @@
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2026 Mi Tierra Colorada. Todos los derechos reservados. Parral, Chile.</p>
-            <p style="opacity: 0.7; font-size: 0.8rem;">Panadería de Masa Madre • Mermeladas Gourmet • Conservas Agroecológicas</p>
+            <div class="footer-brand">
+                <span class="footer-logo">Mi Tierra Colorada</span>
+                <span class="footer-sub">Parral • Maule Sur • Chile</span>
+            </div>
+            <p class="footer-desc">Panadería de Masa Madre • Mermeladas Gourmet • Conservas Agroecológicas</p>
+            <div class="footer-links">
+                <a href="#home">Inicio</a>
+                <a href="#essence">Esencia</a>
+                <a href="#preparaciones">Preparaciones</a>
+                <a href="#products">Catálogo</a>
+                <a href="#contact">Contacto</a>
+                <a href="https://instagram.com/mitierracoloradaparral" target="_blank" rel="noopener noreferrer">@mitierracoloradaparral</a>
+            </div>
+            <p class="footer-copy">&copy; 2026 Mi Tierra Colorada. Alimentos reales de nuestra tierra, directo a tu mesa.</p>
         </div>
     </footer>
 
@@ -324,7 +417,50 @@
         </div>
     </div>
 
+    <!-- Modal Ticket de Pedido Confirmado (Stitch Receipt Modal) -->
+    <div id="ticket-overlay" class="ticket-overlay"></div>
+    <div id="ticket-modal" class="ticket-modal">
+        <div class="ticket-card">
+            <button id="close-ticket-btn" class="close-ticket-btn" aria-label="Cerrar ticket">&times;</button>
+            <div class="ticket-celebration">
+                <div class="ticket-icon-wrap">
+                    <span>🌾</span>
+                    <span class="ticket-check">✓</span>
+                </div>
+                <span class="ticket-pretitle">Cosecha &amp; Amasado a Mano</span>
+                <h3 class="ticket-title">¡Tu pedido ha sido recibido con amor!</h3>
+                <p class="ticket-subtitle">Cada hogaza y conserva se prepara a baja escala respetando los tiempos de la tierra en Parral, Valle del Maule.</p>
+            </div>
+            
+            <div class="ticket-receipt">
+                <div class="ticket-receipt-header">
+                    <span id="ticket-order-id">#MTC-2026</span>
+                    <span id="ticket-order-date">Fecha: Hoy</span>
+                </div>
+                <div id="ticket-items-list" class="ticket-items-list">
+                    <!-- Items del ticket se inyectan dinámicamente -->
+                </div>
+                <div class="ticket-receipt-total">
+                    <span>Total Pedido:</span>
+                    <strong id="ticket-total-val">$0</strong>
+                </div>
+                <div class="ticket-delivery-note">
+                    <span>🏡 Entregas gratis en Parral urbano. Otras comunas se coordinan por WhatsApp.</span>
+                </div>
+            </div>
+
+            <div class="ticket-actions">
+                <a id="ticket-wsp-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-wsp-ticket">
+                    Reabrir Chat de WhatsApp 💬
+                </a>
+                <button type="button" id="btn-close-ticket" class="btn btn-secondary" style="width: 100%;">
+                    Volver a la tienda
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Script principal -->
-    <script type="module" src="script_v6.js?v=21"></script>
+    <script type="module" src="script_v6.js?v=23"></script>
 </body>
 </html>

@@ -22,6 +22,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputPhone = document.getElementById('cart-phone');
     const inputDate = document.getElementById('cart-date');
 
+    // Referencias Ticket de Pedido Confirmado (Stitch)
+    const ticketOverlay = document.getElementById('ticket-overlay');
+    const ticketModal = document.getElementById('ticket-modal');
+    const closeTicketBtn = document.getElementById('close-ticket-btn');
+    const btnCloseTicket = document.getElementById('btn-close-ticket');
+    const ticketOrderId = document.getElementById('ticket-order-id');
+    const ticketOrderDate = document.getElementById('ticket-order-date');
+    const ticketItemsList = document.getElementById('ticket-items-list');
+    const ticketTotalVal = document.getElementById('ticket-total-val');
+    const ticketWspLink = document.getElementById('ticket-wsp-link');
+
     let products = [];
     let cart = JSON.parse(localStorage.getItem('mtc_cart')) || [];
 
@@ -48,6 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const normalizeImage = (img) => {
         if (!img) return 'logo.jpeg';
         let clean = String(img).trim();
+        // Evitar inyección de Base64 excesivo que ralentiza el renderizado del navegador
+        if (clean.startsWith('data:image/') && clean.length > 50000) {
+            return 'logo.jpeg';
+        }
         if (!clean.startsWith('http://') && !clean.startsWith('https://') && !clean.startsWith('data:')) {
             clean = clean.replace(/^\/+/, '');
         }
@@ -68,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const CACHE_KEY = 'mtc_web_products_v5';
+    const CACHE_KEY = 'mtc_web_products_v6';
 
     // Inicialización Instantánea (Stale-While-Revalidate)
     const init = async () => {
@@ -76,17 +91,18 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             localStorage.removeItem('mtc_web_products_cache');
             localStorage.removeItem('mtc_web_products_v4');
+            localStorage.removeItem('mtc_web_products_v5');
             localStorage.removeItem('mtc_products');
         } catch(e){}
 
-        // 1. Carga ultra-rápida desde caché v5 o productos.json estático para FCP inmediato (0ms)
+        // 1. Carga ultra-rápida desde caché v6 o productos.json estático para FCP inmediato (0ms)
         try {
             const cached = localStorage.getItem(CACHE_KEY);
             if (cached) {
                 products = sortProducts(JSON.parse(cached));
                 renderCatalog();
             } else {
-                const localRes = await fetch('./productos.json?v=18');
+                const localRes = await fetch('./productos.json?v=20');
                 if (localRes.ok) {
                     const localData = await localRes.json();
                     products = sortProducts(localData.map(p => ({ ...p, imagen: normalizeImage(p.imagen) })));
@@ -99,13 +115,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateCartUI();
 
-        // 2. Consulta directa a Firestore en el servidor para refrescar catálogo real en vivo
+        // 2. Consulta en segundo plano a Firestore para refrescar catálogo real en vivo
         try {
             let querySnapshot;
             try {
-                querySnapshot = await getDocsFromServer(collection(db, "productos"));
-            } catch (serverErr) {
                 querySnapshot = await getDocs(collection(db, "productos"));
+            } catch (cacheErr) {
+                querySnapshot = await getDocsFromServer(collection(db, "productos"));
             }
             if (!querySnapshot.empty) {
                 const uniqueMap = new Map();
@@ -332,6 +348,40 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
     };
 
+    // Funciones del Ticket de Pedido Confirmado (Stitch)
+    const showOrderTicket = ({ orderNum, total, items, wspUrl, dateFormatted }) => {
+        if (!ticketModal || !ticketOverlay) return;
+        
+        if (ticketOrderId) ticketOrderId.textContent = `#MTC-${orderNum}`;
+        if (ticketOrderDate) ticketOrderDate.textContent = `Fecha: ${dateFormatted || 'Hoy'}`;
+        if (ticketTotalVal) ticketTotalVal.textContent = formatPrice(total);
+        if (ticketWspLink) ticketWspLink.href = wspUrl;
+        
+        if (ticketItemsList) {
+            ticketItemsList.innerHTML = items.map(item => `
+                <div class="ticket-item-row">
+                    <span>${item.quantity}x ${escapeHtml(item.nombre)}</span>
+                    <strong>${formatPrice((item.precio || 0) * item.quantity)}</strong>
+                </div>
+            `).join('');
+        }
+        
+        ticketOverlay.classList.add('active');
+        ticketModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeTicket = () => {
+        if (!ticketModal || !ticketOverlay) return;
+        ticketModal.classList.remove('active');
+        ticketOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+
+    if (closeTicketBtn) closeTicketBtn.addEventListener('click', closeTicket);
+    if (btnCloseTicket) btnCloseTicket.addEventListener('click', closeTicket);
+    if (ticketOverlay) ticketOverlay.addEventListener('click', closeTicket);
+
     if (openCartBtn) openCartBtn.addEventListener('click', openCart);
     if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
     if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
@@ -413,8 +463,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Generar link WhatsApp
                 const text = encodeURIComponent(buildOrderText());
                 const phone = '56978521748';
-                window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+                const wspUrl = `https://wa.me/${phone}?text=${text}`;
+                window.open(wspUrl, '_blank');
                 
+                // Guardar copia para mostrar en el ticket de confirmación
+                const itemsSnapshot = [...cart];
+                const totalSnapshot = orderData.total;
+                const dateParts = inputDate.value.split('-');
+                const dateFormatted = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : inputDate.value;
+                const orderNum = Math.floor(1000 + Math.random() * 9000);
+
                 // Desocupar el carro después de enviar
                 cart = [];
                 saveCart();
@@ -427,6 +485,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 inputPhone.value = '+56 ';
                 inputDate.value = '';
                 closeCart();
+
+                // Mostrar el Ticket de Pedido Confirmado (Stitch)
+                showOrderTicket({
+                    orderNum,
+                    total: totalSnapshot,
+                    items: itemsSnapshot,
+                    wspUrl,
+                    dateFormatted
+                });
 
             } catch (error) {
                 console.error("Error al guardar el pedido:", error);
